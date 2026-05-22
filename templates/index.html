@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+
+{% block title %}Manvi Mart India - Clothing Brand for Men, Women and Kids{% endblock %}
+{% block meta_description %}Shop clothing on Manvi Mart India. Discover t-shirts, lowers, trousers, suits, kurtis, kurtas and kids clothes, then compare on Flipkart, Amazon and Meesho.{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+
+<section class="home-hero">
+
+<div class="container">
+
+<div class="hero-content">
+
+<span class="hero-badge">
+<i class="fa-solid fa-bolt"></i>
+Fresh marketplace picks
+</span>
+
+<h1 class="hero-title">
+Shop smarter with trusted products from Manvi Mart India
+</h1>
+
+<p class="hero-copy">
+Find men, women and kids clothing with quick marketplace links.
+Compare t-shirts, lowers, trousers, suits, kurtis and kurtas before buying.
+</p>
+
+<div class="hero-actions">
+<a href="{{ url_for('products_page') }}" class="glass-btn">
+Explore Products
+</a>
+<a href="{{ url_for('category_page', slug='new-arrivals') }}" class="hero-secondary-btn">
+View New Arrivals
+</a>
+</div>
+
+<div class="hero-proof">
+<div class="hero-proof-item">
+<strong>3 Stores</strong>
+<span>Flipkart, Amazon, Meesho</span>
+</div>
+<div class="hero-proof-item">
+<strong>GST Ready</strong>
+<span>Transparent product info</span>
+</div>
+<div class="hero-proof-item">
+<strong>Curated</strong>
+<span>Clothing-only catalog</span>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="trust-strip">
+<div class="container">
+<div class="trust-grid">
+<div class="trust-item">
+<span class="trust-icon"><i class="fa-solid fa-shield-halved"></i></span>
+<div>
+<strong>Trusted Buying</strong>
+<span>Open products on known marketplaces</span>
+</div>
+</div>
+<div class="trust-item">
+<span class="trust-icon"><i class="fa-solid fa-tags"></i></span>
+<div>
+<strong>Easy Price Check</strong>
+<span>Compare before you purchase</span>
+</div>
+</div>
+<div class="trust-item">
+<span class="trust-icon"><i class="fa-solid fa-box-open"></i></span>
+<div>
+<strong>Clothing Categories</strong>
+<span>T-shirts, lowers, suits and kids wear</span>
+</div>
+</div>
+<div class="trust-item">
+<span class="trust-icon"><i class="fa-solid fa-headset"></i></span>
+<div>
+<strong>Customer Support</strong>
+<span>Reach us for product help</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<!-- Categories -->
+
+<section class="py-5 modern-category-section">
+
+<div class="container">
+
+<div class="text-center mb-4">
+<p class="category-kicker mb-2">
+Explore Collections
+</p>
+<h2 class="modern-heading">
+Shop by Category
+</h2>
+<p class="text-muted mb-0">
+Fresh clothing picks arranged by category
+</p>
+</div>
+
+<div class="category-grid">
+
+<!-- T-SHIRTS -->
+<a href="{{ url_for('category_page', slug='tshirt') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/male-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">T-shirts</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+<!-- LOWERS -->
+<a href="{{ url_for('category_page', slug='lower') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/male-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">Lowers</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+<!-- TROUSERS -->
+<a href="{{ url_for('category_page', slug='trouser') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/male-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">Trousers</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+<!-- SUIT -->
+<a href="{{ url_for('category_page', slug='suit') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/female-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">Suit</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+<!-- KURTI -->
+<a href="{{ url_for('category_page', slug='kurti') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/female-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">Kurti</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+<!-- KURTA -->
+<a href="{{ url_for('category_page', slug='kurta') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/female-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">Kurta</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+<!-- KIDS CLOTHES -->
+<a href="{{ url_for('category_page', slug='kids-clothes') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/new-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">Kids Clothes</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- TRENDING PRODUCTS -->
+
+{% set title = "Trending Products" %}
+{% set product_list = products %}
+{% include "components/product_section.html" %}
+
+
+<!-- BLOGS -->
+
+<section class="py-5">
+<div class="container">
+<div class="product-showcase-head">
+<div>
+<p class="product-kicker mb-2">Shopping Guides</p>
+<h3 class="product-showcase-title">Latest Blogs</h3>
+<p class="product-showcase-copy">SEO content and buying guides for better product discovery</p>
+</div>
+<a href="{{ url_for('blogs_page') }}" class="product-view-link">View all</a>
+</div>
+
+<div class="blog-grid">
+{% for post in blog_posts[:3] %}
+<article class="blog-card">
+<a href="{{ url_for('blog_detail', slug=post.slug) }}" class="blog-image">
+<img src="{{ url_for('static', filename=post.image) }}" alt="{{ post.title }}" loading="lazy">
+</a>
+<div class="blog-body">
+<div class="blog-meta">
+<span>{{ post.category }}</span>
+<span>{{ post.date }}</span>
+</div>
+<h2>
+<a href="{{ url_for('blog_detail', slug=post.slug) }}">{{ post.title }}</a>
+</h2>
+<p>{{ post.excerpt }}</p>
+<a href="{{ url_for('blog_detail', slug=post.slug) }}" class="blog-read-link">Read Guide</a>
+</div>
+</article>
+{% endfor %}
+</div>
+</div>
+</section>
+
+
+<!-- WHY CHOOSE -->
+
+<section class="py-5">
+
+<div class="container">
+
+<div class="glass-why text-center">
+
+<h2 class="fw-bold mb-3 text-black">
+Why Choose Manvi Mart India?
+</h2>
+
+<p class="text-muted mb-0">
+We keep the shopping path simple: discover products here, compare them on trusted marketplaces, and purchase from the store that gives you the best deal.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+{% endblock %}

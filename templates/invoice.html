@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="bg-white rounded-3 shadow-sm p-4 p-md-5">
+            <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4">
+                <div>
+                    <p class="category-kicker mb-2">Original for Recipient</p>
+                    <h2 class="fw-bold mb-1">Tax Invoice</h2>
+                    <p class="text-muted mb-0">{{ order.invoice_no }}</p>
+                </div>
+
+                <div class="text-md-end">
+                    <p class="mb-1"><strong>Date:</strong> {{ order.created_at.strftime("%d %b %Y") }}</p>
+                    <p class="mb-1"><strong>Order Status:</strong> {{ order.order_status }}</p>
+                    <p class="mb-0"><strong>Payment:</strong> {{ payment_methods.get(order.payment_method, order.payment_method) }}</p>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                    <div class="border rounded-3 p-3 h-100">
+                        <h6 class="fw-bold">Supplier</h6>
+                        <p class="mb-1">{{ store_name }}</p>
+                        <p class="mb-1">{{ store_address }}</p>
+                        <p class="mb-1">State: {{ store_state }} ({{ store_state_code }})</p>
+                        <p class="mb-0">GSTIN: {{ store_gstin }}</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="border rounded-3 p-3 h-100">
+                        <h6 class="fw-bold">Bill To / Ship To</h6>
+                        <p class="mb-1">{{ order.customer_name }}</p>
+                        <p class="mb-1">{{ order.customer_email }} | {{ order.customer_phone }}</p>
+                        <p class="mb-1">{{ order.shipping_address }}</p>
+                        <p class="mb-1">{{ order.shipping_city }}, {{ order.shipping_state }} - {{ order.shipping_pincode }}</p>
+                        <p class="mb-0">Place of Supply: {{ order.shipping_state }} ({{ order.shipping_state_code }})</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>HSN</th>
+                        <th>Qty</th>
+                        <th>Rate</th>
+                        <th>Taxable</th>
+                        <th>GST %</th>
+                        <th>CGST</th>
+                        <th>SGST</th>
+                        <th>IGST</th>
+                        <th class="text-end">Total</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for item in order.items %}
+                    <tr>
+                        <td>{{ item.product_name }}</td>
+                        <td>{{ item.hsn_code }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>₹{{ "%.2f"|format(item.price) }}</td>
+                        <td>₹{{ "%.2f"|format(item.taxable_value) }}</td>
+                        <td>{{ "%.2f"|format(item.gst_rate) }}%</td>
+                        <td>₹{{ "%.2f"|format(item.cgst_amount) }}</td>
+                        <td>₹{{ "%.2f"|format(item.sgst_amount) }}</td>
+                        <td>₹{{ "%.2f"|format(item.igst_amount) }}</td>
+                        <td class="text-end">₹{{ "%.2f"|format(item.line_total) }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row justify-content-end">
+                <div class="col-md-5">
+                    <div class="border rounded-3 p-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Subtotal</span>
+                            <strong>₹{{ "%.2f"|format(order.subtotal_amount) }}</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Taxable Value</span>
+                            <strong>₹{{ "%.2f"|format(order.taxable_amount) }}</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>CGST</span>
+                            <strong>₹{{ "%.2f"|format(order.cgst_amount) }}</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>SGST</span>
+                            <strong>₹{{ "%.2f"|format(order.sgst_amount) }}</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>IGST</span>
+                            <strong>₹{{ "%.2f"|format(order.igst_amount) }}</strong>
+                        </div>
+                        <div class="d-flex justify-content-between border-top pt-3 mt-3">
+                            <span class="fw-bold">Grand Total</span>
+                            <strong class="fs-4">₹{{ "%.2f"|format(order.total_amount) }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-warning mt-4 mb-0">
+                This invoice uses the store GSTIN configured in the website settings. Replace GSTIN_NOT_ADDED with your valid GSTIN before issuing GST tax invoices. E-invoice/IRN requirements, if applicable to your business turnover and transaction type, must be handled through the official IRP.
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

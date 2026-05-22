@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5" style="max-width:500px;">
+
+    <div class="glass-why p-4">
+
+        <div class="text-center mb-3">
+
+            <h4 class="text-center mb-3">
+                Create Account
+            </h4>
+
+            <form method="POST">
+
+                <div class="form-floating mb-3">
+
+                    <input
+                            type="text"
+                            name="name"
+                            class="form-control"
+                            id="floatingName"
+                            placeholder="Full Name"
+                            required>
+
+                    <label for="floatingName">
+                        Full Name
+                    </label>
+
+                </div>
+
+
+                <div class="form-floating mb-3">
+
+                    <input
+                            type="tel"
+                            name="phone"
+                            class="form-control"
+                            id="floatingPhone"
+                            placeholder="Mobile Number"
+                            pattern="[0-9]{10,15}"
+                            required>
+
+                    <label for="floatingPhone">
+                        Mobile Number
+                    </label>
+
+                </div>
+
+
+                <div class="form-floating mb-3">
+
+                    <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            id="floatingEmail"
+                            placeholder="name@example.com"
+                            required>
+
+                    <label for="floatingEmail">
+                        Email address
+                    </label>
+
+                </div>
+
+
+                <div class="form-floating mb-3">
+
+                    <input
+                            type="password"
+                            name="password"
+                            class="form-control"
+                            id="floatingPassword"
+                            placeholder="Password"
+                            minlength="8"
+                            required>
+
+                    <label for="floatingPassword">
+                        Password
+                    </label>
+
+                </div>
+
+
+                <button
+                        class="btn glass-btn w-100"
+                        type="submit">
+
+                    Sign Up
+
+                </button>
+
+                <p class="text-muted small text-center">
+
+                    By signing up you agree to our
+                    <a href="{{ url_for('terms_and_condition') }}">
+                        Terms & Conditions
+                    </a>
+                    . Your password is saved securely and is never sent by email or WhatsApp.
+
+                </p>
+
+            </form>
+
+            <hr>
+
+            <div class="text-center">
+
+                <small>
+
+                    Already have an account?
+
+                    <a href="{{ url_for('login', next=request.args.get('next')) if request.args.get('next') else url_for('login') }}">
+                        Login
+                    </a>
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

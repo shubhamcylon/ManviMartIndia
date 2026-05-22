@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-5">
+                <div class="bg-white rounded-3 shadow-sm p-4">
+                    <p class="category-kicker mb-2">Order Tracking</p>
+                    <h2 class="fw-bold mb-3">Track Your Order</h2>
+                    <p class="text-muted">
+                        If you purchased through Flipkart, Amazon or Meesho, track the order inside that marketplace account. For older Manvi Mart enquiries, enter your tracking details below.
+                    </p>
+
+                    <div class="d-grid gap-2 mb-4">
+                        <a href="{{ url_for('home') }}" class="btn marketplace-btn flipkart-btn">Open Flipkart</a>
+                        <a href="{{ url_for('home') }}" class="btn marketplace-btn amazon-btn">Open Amazon</a>
+                        <a href="{{ url_for('home') }}" class="btn marketplace-btn meesho-btn">Open Meesho</a>
+                    </div>
+
+                    <form method="POST">
+                        <label class="form-label">Tracking ID</label>
+                        <input
+                                type="text"
+                                name="tracking_id"
+                                class="form-control mb-3"
+                                placeholder="MMT-260503-ABC123"
+                                required>
+
+                        <label class="form-label">Mobile Number</label>
+                        <input
+                                type="tel"
+                                name="phone"
+                                class="form-control mb-3"
+                                placeholder="10 digit mobile number"
+                                pattern="[0-9]{10,15}"
+                                required>
+
+                        <button class="btn btn-success w-100">
+                            Track Order
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            {% if order %}
+            <div class="col-lg-6">
+                <div class="bg-white rounded-3 shadow-sm p-4">
+                    <h4 class="fw-bold mb-3">Order Status</h4>
+
+                    <div class="border rounded-3 p-3 mb-3">
+                        <p class="text-muted mb-1">Tracking ID</p>
+                        <h5 class="fw-bold text-success mb-0">{{ order.tracking_id }}</h5>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <p class="text-muted mb-1">Status</p>
+                            <strong>{{ order.order_status }}</strong>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="text-muted mb-1">Payment</p>
+                            <strong>{{ payment_methods.get(order.payment_method, order.payment_method) }}</strong>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="text-muted mb-1">Total</p>
+                            <strong>₹{{ "%.2f"|format(order.total_amount) }}</strong>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="text-muted mb-1">Date</p>
+                            <strong>{{ order.created_at.strftime("%d %b %Y") }}</strong>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h6 class="fw-bold">Delivery Address</h6>
+                    <p class="mb-0 text-muted">
+                        {{ order.shipping_address }},
+                        {{ order.shipping_city }},
+                        {{ order.shipping_state }} - {{ order.shipping_pincode }}
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

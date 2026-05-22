@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+
+        <h2 class="fw-bold mb-4">Shopping Cart</h2>
+
+        {% if cart %}
+
+        <div class="alert alert-warning">
+            Online payment gateway is coming soon. Choose a payment method at checkout and our team will confirm it before dispatch.
+        </div>
+
+        <table class="table align-middle">
+
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            {% for pid,item in cart.items() %}
+
+            <tr>
+
+                <td class="d-flex align-items-center gap-3">
+
+                    <img src="{{ url_for('static', filename=item.image) }}"
+                         width="60">
+
+                    {{ item.name }}
+
+                </td>
+
+                <td>₹{{ item.price }}</td>
+
+                <td>{{ item.qty }}</td>
+
+                <td>₹{{ item.price * item.qty }}</td>
+
+                <td>
+
+                    <a href="{{ url_for('remove_cart', pid=pid) }}"
+                       class="btn btn-sm btn-danger">
+
+                        Remove
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <div class="text-end">
+
+            <h4>Total : ₹{{ total }}</h4>
+
+            <a href="{{ url_for('checkout') }}" class="btn btn-success mt-2">
+                Proceed to Checkout
+            </a>
+
+        </div>
+
+        {% else %}
+
+        <div class="text-center py-5">
+
+            <h4>Your cart is empty</h4>
+
+            <a href="{{ url_for('products_page') }}"
+               class="btn btn-dark mt-3">
+
+                Continue Shopping
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

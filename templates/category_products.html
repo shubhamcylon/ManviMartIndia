@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category_name }} - Manvi Mart India{% endblock %}
+{% block meta_description %}Explore {{ category_name }} products on Manvi Mart India and compare buying options across marketplaces.{% endblock %}
+
+{% block content %}
+
+<section class="py-5 text-center">
+    <div class="container">
+        <p class="category-kicker mb-2">Collection</p>
+        <h1 class="fw-bold text-dark">{{ category_name }}</h1>
+        <p class="text-muted mb-0">Available products from this category</p>
+    </div>
+</section>
+
+{% set title = category_name %}
+{% set product_list = products %}
+{% include "components/product_section.html" %}
+
+{% endblock %}

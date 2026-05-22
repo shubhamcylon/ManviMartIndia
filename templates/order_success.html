@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="bg-white rounded-3 shadow-sm p-4 p-md-5 text-center">
+            <p class="category-kicker mb-2">Order Confirmed</p>
+            <h1 class="fw-bold mb-3">Your Order Is Placed</h1>
+            <p class="text-muted mb-4">
+                Thank you for shopping with Manvi Mart India. Our team will confirm payment and delivery before dispatch.
+            </p>
+
+            <div class="border rounded-3 p-4 mx-auto mb-4" style="max-width:520px;">
+                <p class="text-muted mb-1">Tracking ID</p>
+                <h3 class="fw-bold text-success mb-3">{{ order.tracking_id }}</h3>
+
+                <div class="d-flex justify-content-between border-top pt-3 mt-3">
+                    <span>Order Total</span>
+                    <strong>₹{{ "%.2f"|format(order.total_amount) }}</strong>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <span>Payment</span>
+                    <strong>{{ payment_methods.get(order.payment_method, order.payment_method) }}</strong>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <span>Status</span>
+                    <strong>{{ order.order_status }}</strong>
+                </div>
+            </div>
+
+            <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
+                <a href="{{ url_for('track_order') }}" class="btn btn-success px-4">
+                    Track Order
+                </a>
+                <a href="{{ url_for('products_page') }}" class="btn btn-outline-dark px-4">
+                    Continue Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

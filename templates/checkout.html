@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+
+        <div class="mb-4">
+            <p class="category-kicker mb-2">Secure Checkout</p>
+            <h2 class="fw-bold mb-2">Complete Your Order</h2>
+            <p class="text-muted mb-0">
+                Orders are accepted only within India. Product prices are GST-inclusive.
+            </p>
+        </div>
+
+        <form method="POST">
+            <div class="row g-4 align-items-start">
+                <div class="col-lg-8">
+                    <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
+                        <h5 class="fw-bold mb-3">Contact Details</h5>
+
+                        {% if current_user and current_user.phone %}
+                        <div class="border rounded-3 p-3 bg-light">
+                            <div class="fw-semibold">{{ current_user.name }}</div>
+                            <div class="text-muted small">{{ current_user.email }} | {{ current_user.phone }}</div>
+                        </div>
+
+                        <input type="hidden" name="customer_name" value="{{ current_user.name }}">
+                        <input type="hidden" name="customer_email" value="{{ current_user.email }}">
+                        <input type="hidden" name="customer_phone" value="{{ current_user.phone }}">
+                        {% else %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Full Name</label>
+                                <input
+                                        type="text"
+                                        name="customer_name"
+                                        class="form-control"
+                                        value="{{ current_user.name if current_user else '' }}"
+                                        required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Mobile Number</label>
+                                <input
+                                        type="tel"
+                                        name="customer_phone"
+                                        class="form-control"
+                                        value=""
+                                        pattern="[0-9]{10,15}"
+                                        required>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Email Address</label>
+                                <input
+                                        type="email"
+                                        name="customer_email"
+                                        class="form-control"
+                                        value="{{ current_user.email if current_user else '' }}"
+                                        required>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
+                        <h5 class="fw-bold mb-3">Delivery Address</h5>
+
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label">Address</label>
+                                <textarea
+                                        name="shipping_address"
+                                        class="form-control"
+                                        rows="3"
+                                        placeholder="House no, street, area"
+                                        required></textarea>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">City</label>
+                                <input
+                                        type="text"
+                                        name="shipping_city"
+                                        class="form-control"
+                                        required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">State</label>
+                                <select name="shipping_state" class="form-select" id="shippingState" required>
+                                    <option value="">Select state</option>
+                                    {% for state, code in indian_states.items() %}
+                                    <option value="{{ state }}" {% if state == store_state %}selected{% endif %}>
+                                        {{ state }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Pincode</label>
+                                <input
+                                        type="text"
+                                        name="shipping_pincode"
+                                        class="form-control"
+                                        pattern="[0-9]{6}"
+                                        maxlength="6"
+                                        required>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Country</label>
+                                <input
+                                        type="text"
+                                        name="shipping_country"
+                                        class="form-control"
+                                        value="India"
+                                        readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-3 shadow-sm p-4">
+                        <h5 class="fw-bold mb-3">Payment Method</h5>
+
+                        <div class="row g-3">
+                            {% for value, label in payment_methods.items() %}
+                            <div class="col-md-4">
+                                <label class="payment-option">
+                                    <input
+                                            type="radio"
+                                            name="payment_method"
+                                            value="{{ value }}"
+                                            {% if loop.first %}checked{% endif %}>
+                                    <span>{{ label }}</span>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="alert alert-warning small mt-3 mb-0">
+                            Online payment gateway is being set up. Selected payment method will be confirmed manually before dispatch.
+                        </div>
+
+                        <button class="btn btn-success w-100 mt-4 d-lg-none">
+                            Place Order
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="bg-white rounded-3 shadow-sm p-4 checkout-summary">
+                        <h5 class="fw-bold mb-3">Order Summary</h5>
+
+                        {% for item in totals.rows %}
+                        <div class="d-flex gap-3 py-3 border-bottom">
+                            <img src="{{ url_for('static', filename=item.image) }}"
+                                 width="58"
+                                 height="58"
+                                 class="rounded"
+                                 style="object-fit:contain;background:#f6f8f3;"
+                                 alt="{{ item.name }}">
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">{{ item.name }}</div>
+                                <small class="text-muted">HSN {{ item.hsn }} | GST {{ item.gst_rate }}%</small>
+                                <div class="d-flex justify-content-between mt-1">
+                                    <small>Qty {{ item.quantity }}</small>
+                                    <strong>₹{{ "%.2f"|format(item.line_total) }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="pt-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Taxable Value</span>
+                                <strong>₹{{ "%.2f"|format(totals.taxable_total) }}</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>CGST</span>
+                                <strong id="cgstAmount">₹{{ "%.2f"|format(totals.cgst_total) }}</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>SGST</span>
+                                <strong id="sgstAmount">₹{{ "%.2f"|format(totals.sgst_total) }}</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>IGST</span>
+                                <strong id="igstAmount">₹{{ "%.2f"|format(totals.igst_total) }}</strong>
+                            </div>
+                            <div class="d-flex justify-content-between border-top pt-3 mt-3">
+                                <span class="fw-bold">Grand Total</span>
+                                <strong class="fs-4 text-success">₹{{ "%.2f"|format(totals.grand_total) }}</strong>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-success w-100 mt-4 d-none d-lg-block">
+                            Place Order
+                        </button>
+
+                        <a class="btn btn-outline-dark w-100 mt-2"
+                           href="{{ url_for('cart_page') }}">
+                            Back to Cart
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+<script>
+const shippingState = document.getElementById("shippingState");
+const cgstAmount = document.getElementById("cgstAmount");
+const sgstAmount = document.getElementById("sgstAmount");
+const igstAmount = document.getElementById("igstAmount");
+const storeState = "{{ store_state }}";
+const totalGst = Number("{{ '%.2f'|format(totals.gst_total) }}");
+
+function formatMoney(value){
+    return "₹" + value.toFixed(2);
+}
+
+function updateGstSplit(){
+    if(!shippingState){
+        return;
+    }
+
+    if(shippingState.value === storeState){
+        const halfGst = Math.round((totalGst / 2) * 100) / 100;
+        cgstAmount.textContent = formatMoney(halfGst);
+        sgstAmount.textContent = formatMoney(totalGst - halfGst);
+        igstAmount.textContent = formatMoney(0);
+    } else {
+        cgstAmount.textContent = formatMoney(0);
+        sgstAmount.textContent = formatMoney(0);
+        igstAmount.textContent = formatMoney(totalGst);
+    }
+}
+
+shippingState.addEventListener("change", updateGstSplit);
+updateGstSplit();
+</script>
+
+{% endblock %}

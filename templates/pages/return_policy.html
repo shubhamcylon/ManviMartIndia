@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Return Policy Header -->
+
+<section class="py-5 text-center">
+
+<div class="container">
+
+<h1 class="fw-bold text-dark">
+Return & Refund Policy
+</h1>
+
+<p class="text-muted">
+We want you to be satisfied with your purchase.
+Please read our return policy carefully.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- Return Policy Content -->
+
+<section class="pb-5">
+
+<div class="container">
+
+<div class="glass-why text-black p-5">
+
+
+<h4 class="fw-bold mb-3">
+1. Return Eligibility
+</h4>
+
+<p>
+For products purchased through Flipkart, Amazon, Meesho, or any external
+marketplace link, returns and refunds are handled by the marketplace where
+the order was placed. Please check the return window and seller policy on
+that marketplace before buying.
+</p>
+
+
+<h4 class="fw-bold mt-4 mb-3">
+2. Non-Returnable Items
+</h4>
+
+<p>
+Certain items cannot be returned, including:
+</p>
+
+<ul>
+
+<li>Used or damaged products</li>
+<li>Personal care products once opened</li>
+<li>Items marked as non-returnable during sale</li>
+
+</ul>
+
+
+<h4 class="fw-bold mt-4 mb-3">
+3. Refund Process
+</h4>
+
+<p>
+Refund approval, pickup, inspection and payment reversal timelines depend on
+the marketplace and seller policy shown during checkout.
+</p>
+
+<p>
+Manvi Mart can help you find the correct support link, but the refund is
+processed by the marketplace where the purchase was completed.
+</p>
+
+
+<h4 class="fw-bold mt-4 mb-3">
+4. Replacement
+</h4>
+
+<p>
+If the product received is defective, damaged,
+or incorrect, please raise a replacement or return request on the same
+marketplace where you placed the order.
+</p>
+
+
+<h4 class="fw-bold mt-4 mb-3">
+5. Shipping Costs
+</h4>
+
+<p>
+Shipping costs for returning items may be the
+responsibility of the customer unless the return
+is due to an error from our side
+(damaged or incorrect item).
+</p>
+
+
+<h4 class="fw-bold mt-4 mb-3">
+6. Contact Us
+</h4>
+
+<p>
+If you have any questions regarding returns
+or refunds, please contact us:
+</p>
+
+<p>
+
+<strong>Email:</strong> {{ store_email }} <br>
+
+<strong>Contact Page:</strong>
+<a href="{{ url_for('contact') }}">
+Contact Us
+</a>
+
+</p>
+
+
+<p class="text-muted small mt-4">
+Last Updated: March 2026
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="glass-why text-center text-black">
+            <p class="text-uppercase fw-semibold text-black-50 mb-2">
+                {{ category_name }}
+            </p>
+
+            <h1 class="fw-bold mb-3">
+                Coming Soon
+            </h1>
+
+            <p class="lead text-black-50 mb-4">
+                This category is being prepared. Please check back soon for new products.
+            </p>
+
+            <a href="{{ url_for('products_page') }}" class="btn btn-success px-4">
+                View Available Products
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

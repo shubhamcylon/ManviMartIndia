@@ -1,0 +1,28 @@
+/* ================================
+   Social Media Icons
+   ================================ */
+
+.social-icon {
+  font-size: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.social-icon img {
+  width: 2em;
+  height: 2em;
+  transition: transform 0.2s ease;
+}
+
+.social-icon:hover img {
+  transform: scale(1.1);
+}
+
+/* Remove focus outline (Bootstrap safe) */
+.social-icon:focus {
+  outline: none;
+  box-shadow: none;
+}

@@ -1,0 +1,258 @@
+<footer class="glass-footer pt-5 pb-4 mt-5">
+
+<div class="container">
+
+<div class="row">
+
+<!-- Brand -->
+
+<div class="col-lg-4 col-md-6 mb-4">
+
+<div class="d-flex align-items-center mb-3">
+
+<img
+src="{{ url_for('static', filename='assets/img/manvi-mart-logo.png') }}"
+alt="ManviMart Logo"
+class="site-logo site-logo-footer me-2">
+
+<h5 class="fw-bold mb-0">
+Manvi Mart
+</h5>
+
+</div>
+
+<p class="text-secondary">
+
+Curated product discovery for Indian shoppers. Compare products and buy through trusted marketplaces.
+
+</p>
+
+</div>
+
+
+<!-- Quick Links -->
+
+<div class="col-lg-2 col-md-4 mb-4">
+
+<h6 class="fw-semibold">
+Quick Links
+</h6>
+
+<ul class="list-unstyled">
+
+<li>
+<a href="{{ url_for('home') }}" class="text-decoration-none text-secondary">
+Home
+</a>
+</li>
+
+<li>
+<a href="{{ url_for('products_page') }}" class="text-decoration-none text-secondary">
+Products
+</a>
+</li>
+
+<li>
+<a href="{{ url_for('about') }}" class="text-decoration-none text-secondary">
+About Us
+</a>
+</li>
+
+<li>
+<a href="{{ url_for('contact') }}" class="text-decoration-none text-secondary">
+Contact
+</a>
+</li>
+
+<li>
+<a href="{{ url_for('track_order') }}" class="text-decoration-none text-secondary">
+Track Order
+</a>
+</li>
+
+<li>
+<a href="{{ url_for('blogs_page') }}" class="text-decoration-none text-secondary">
+Blogs
+</a>
+</li>
+
+</ul>
+
+</div>
+
+
+<!-- Policies -->
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<h6 class="fw-semibold">
+Policies
+</h6>
+
+<ul class="list-unstyled">
+
+<li>
+<a href="{{ url_for('privacy_policy') }}" class="text-decoration-none text-secondary">
+Privacy Policy
+</a>
+</li>
+
+<li>
+<a href="{{ url_for('return_policy') }}" class="text-decoration-none text-secondary">
+Return Policy
+</a>
+</li>
+
+<li>
+<a href="{{ url_for('terms_and_condition') }}" class="text-decoration-none text-secondary">
+Terms & Conditions
+</a>
+</li>
+
+</ul>
+
+</div>
+
+
+<!-- Contact -->
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<h6 class="fw-semibold">
+Contact
+</h6>
+
+<p class="text-secondary mb-1">
+Email: {{ store_email }}
+</p>
+
+</div>
+
+</div>
+
+
+<hr>
+
+
+<!-- Bottom Bar -->
+
+<div class="glass-footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center py-3 px-4">
+
+<div class="text-black mb-2 mb-md-0 fw-semibold">
+
+© {{ current_year }} Manvi Mart. All Rights Reserved.
+
+</div>
+
+
+<!-- Social -->
+
+<div class="d-flex gap-3">
+
+<a
+href="https://www.instagram.com/manvimart/"
+target="_blank"
+rel="noopener noreferrer"
+class="social-icon">
+
+<img
+src="{{ url_for('static', filename='assets/img/instagram.svg') }}"
+alt="Instagram">
+
+</a>
+
+<a
+href="https://www.facebook.com/profile.php?id=61586044196779"
+target="_blank"
+rel="noopener noreferrer"
+class="social-icon">
+
+<img
+src="{{ url_for('static', filename='assets/img/facebook.svg') }}"
+alt="Facebook">
+
+</a>
+
+<a
+href="{{ url_for('home') }}"
+class="social-icon"
+title="Flipkart link will be updated soon">
+
+<img
+src="{{ url_for('static', filename='assets/img/flipkart.svg') }}"
+alt="Flipkart">
+
+</a>
+
+<a
+href="{{ url_for('home') }}"
+class="social-icon"
+title="Amazon link will be updated soon">
+
+<img
+src="{{ url_for('static', filename='assets/img/amazon.svg') }}"
+alt="Amazon">
+
+</a>
+
+<a
+href="{{ url_for('home') }}"
+class="social-icon"
+title="Meesho link will be updated soon">
+
+<img
+src="{{ url_for('static', filename='assets/img/meesho.svg') }}"
+alt="Meesho">
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</footer>
+
+
+<style>
+
+.social-icon{
+width:40px;
+height:40px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:rgba(255,255,255,0.25);
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+transition:all 0.25s ease;
+overflow:hidden;
+}
+
+.social-icon img{
+width:100%;
+height:100%;
+object-fit:contain;
+padding:8px;
+background:white;
+border-radius:50%;
+display:block;
+}
+
+.social-icon:hover img{
+transform:scale(1.15);
+}
+
+.social-icon img{
+box-sizing:border-box;
+}
+
+.social-icon:hover{
+background:rgba(143,198,183,0.35);
+box-shadow:0 4px 12px rgba(143,198,183,0.4);
+transform:translateY(-2px);
+}
+
+</style>

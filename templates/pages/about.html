@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- PAGE HERO -->
+
+<section class="py-5 text-center text-white"
+style="background:linear-gradient(135deg,#0f5a2c,#8db31f);">
+
+<div class="container py-4">
+
+<h1 class="fw-bold display-5">
+About ManviMart
+</h1>
+
+<p class="lead">
+A modern online marketplace built to make shopping simple,
+affordable, and reliable.
+</p>
+
+</div>
+</section>
+
+
+<!-- ABOUT INTRO -->
+
+<section class="py-5">
+
+<div class="container">
+
+<div class="row align-items-center g-5">
+
+<div class="col-lg-6">
+
+<img
+src="{{ url_for('static', filename='assets/img/about.png') }}"
+class="img-fluid rounded-4 shadow"
+alt="About ManviMart ecommerce platform"
+loading="lazy">
+
+</div>
+
+<div class="col-lg-6">
+
+<h2 class="fw-bold mb-3">
+Who We Are
+</h2>
+
+<p class="text-muted">
+ManviMart is an online shopping platform designed to make everyday
+shopping easy and convenient. Our goal is to provide quality products
+at the best prices while delivering a smooth and reliable shopping experience.
+</p>
+
+<p class="text-muted">
+We focus on clothing for men, women and kids, including t-shirts, lowers,
+trousers, kurtis, kurtas, suits and comfortable kids wear.
+</p>
+
+<p class="text-muted">
+At ManviMart, we believe online shopping should be simple,
+transparent, and enjoyable for everyone.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- WHY CHOOSE US -->
+
+<section class="py-5">
+
+<div class="container">
+
+<h2 class="text-center fw-bold mb-5">
+Why Choose ManviMart
+</h2>
+
+<div class="row g-4">
+
+<div class="col-md-4">
+
+<div class="glass-why text-center h-100">
+
+<h5 class="fw-bold mb-3">
+Quality Products
+</h5>
+
+<p>
+We carefully select products that meet quality standards
+so customers always receive the best value.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="col-md-4">
+
+<div class="glass-why text-center h-100">
+
+<h5 class="fw-bold mb-3">
+Secure Shopping
+</h5>
+
+<p>
+Our platform uses secure technologies to ensure
+safe transactions and reliable shopping.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="col-md-4">
+
+<div class="glass-why text-center h-100">
+
+<h5 class="fw-bold mb-3">
+Marketplace Choice
+</h5>
+
+<p>
+Choose the marketplace you trust for final price,
+delivery, payment and returns.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- MISSION -->
+
+<section class="py-5">
+
+<div class="container text-center">
+
+<h2 class="fw-bold mb-3">
+Our Mission
+</h2>
+
+<p class="text-muted mx-auto" style="max-width:750px">
+
+Our mission is to build a reliable online marketplace that connects
+customers with quality products at fair prices.
+
+We aim to simplify online shopping by providing a seamless platform
+where users can discover products, shop easily,
+and receive excellent customer support.
+
+</p>
+
+</div>
+
+</section>
+
+
+<!-- CALL TO ACTION -->
+
+<section class="py-5 text-center text-white"
+style="background:linear-gradient(135deg,#0f5a2c,#8db31f);">
+
+<div class="container">
+
+<h3 class="fw-bold mb-3">
+Start Shopping Today
+</h3>
+
+<p class="mb-4">
+Discover amazing products and deals on ManviMart.
+</p>
+
+<a href="{{ url_for('products_page') }}" class="glass-btn px-4">
+Shop Now
+</a>
+
+</div>
+
+</section>
+
+{% endblock %}

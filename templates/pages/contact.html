@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Contact Hero -->
+
+<section class="py-5 text-center text-black">
+
+<div class="container">
+
+<h1 class="fw-bold">
+Contact Us
+</h1>
+
+<p class="lead">
+We’d love to hear from you
+</p>
+
+</div>
+
+</section>
+
+
+<section class="py-5">
+
+<div class="container">
+
+<div class="row g-4">
+
+
+<!-- Contact Info -->
+
+<div class="col-md-5">
+
+<div class="glass-why text-black h-100 p-4">
+
+<h4 class="fw-bold mb-4">
+Get In Touch
+</h4>
+
+<p>
+Have questions about products, orders, or anything else?
+Our team is ready to help you.
+</p>
+
+<hr>
+
+<p class="mb-2">
+
+<strong>Email</strong><br>
+
+{{ store_email }}
+
+</p>
+
+<p>
+
+<strong>Address</strong><br>
+
+Haridwar, Uttarakhand<br>
+India
+
+</p>
+
+</div>
+
+</div>
+
+
+<!-- Contact Form -->
+
+<div class="col-md-7">
+
+<div class="glass-why text-black p-4">
+
+<h4 class="fw-bold mb-4">
+Send Message
+</h4>
+
+
+<form method="POST" action="{{ url_for('contact') }}">
+
+<div class="mb-3">
+
+<label class="form-label">
+Your Name
+</label>
+
+<input
+type="text"
+name="name"
+class="form-control"
+placeholder="Enter your name"
+required>
+
+</div>
+
+
+<div class="mb-3">
+
+<label class="form-label">
+Email Address
+</label>
+
+<input
+type="email"
+name="email"
+class="form-control"
+placeholder="Enter your email"
+required>
+
+</div>
+
+
+<div class="mb-3">
+
+<label class="form-label">
+Subject
+</label>
+
+<input
+type="text"
+name="subject"
+class="form-control"
+placeholder="Subject">
+
+</div>
+
+
+<div class="mb-3">
+
+<label class="form-label">
+Message
+</label>
+
+<textarea
+name="message"
+class="form-control"
+rows="4"
+placeholder="Write your message"
+required></textarea>
+
+</div>
+
+
+<button class="btn glass-btn px-4">
+
+Send Message
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}Products - Manvi Mart India{% endblock %}
+{% block meta_description %}Browse Manvi Mart clothing products including t-shirts, lowers, trousers, suits, kurtis, kurtas and kids clothes.{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HERO -->
+
+<section class="py-5 text-center product-page-hero">
+
+<div class="container">
+
+<p class="category-kicker mb-2">
+Shop The Collection
+</p>
+
+<h1 class="fw-bold text-dark">
+Our Products
+</h1>
+
+<p class="text-muted">
+Browse clothing products and choose your preferred marketplace to purchase.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+
+<section class="py-5 modern-category-section">
+
+<div class="container">
+
+<div class="text-center mb-4">
+
+<p class="category-kicker mb-2">
+Explore Collections
+</p>
+
+<h2 class="modern-heading">
+Shop by Category
+</h2>
+
+<p class="text-muted mb-0">
+Find the section you want faster
+</p>
+
+</div>
+
+<div class="category-grid">
+
+<!-- T-SHIRTS -->
+<a href="{{ url_for('category_page', slug='tshirt') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/male-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">T-shirts</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+<!-- LOWERS -->
+<a href="{{ url_for('category_page', slug='lower') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/male-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">Lowers</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+<!-- TROUSERS -->
+<a href="{{ url_for('category_page', slug='trouser') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/male-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">Trousers</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+<!-- SUIT -->
+<a href="{{ url_for('category_page', slug='suit') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/female-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">Suit</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+<!-- KURTI -->
+<a href="{{ url_for('category_page', slug='kurti') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/female-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">Kurti</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+<!-- KURTA -->
+<a href="{{ url_for('category_page', slug='kurta') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/female-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">Kurta</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+<!-- KIDS CLOTHES -->
+<a href="{{ url_for('category_page', slug='kids-clothes') }}" class="modern-category-card">
+<div class="category-image-panel">
+<img src="{{ url_for('static', filename='assets/img/new-category.png') }}">
+</div>
+<div class="category-card-body">
+<div>
+<span class="category-label">Kids Clothes</span>
+<span class="category-status">Available now</span>
+</div>
+<span class="category-arrow">›</span>
+</div>
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ALL PRODUCTS -->
+
+{% set title = "All Products" %}
+{% set product_list = products %}
+{% include "components/product_section.html" %}
+
+
+<!-- TRENDING PRODUCTS -->
+
+{% set title = "Trending Products" %}
+{% set product_list = products %}
+{% include "components/product_section.html" %}
+
+{% endblock %}

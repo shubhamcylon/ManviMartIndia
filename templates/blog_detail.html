@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - Manvi Mart Blog{% endblock %}
+{% block meta_description %}{{ post.excerpt }}{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.excerpt }}{% endblock %}
+
+{% block content %}
+
+<article class="py-5">
+    <div class="container">
+        <div class="blog-detail-layout">
+            <div class="blog-article">
+                <p class="category-kicker mb-2">{{ post.category }}</p>
+                <h1 class="fw-bold text-dark mb-3">{{ post.title }}</h1>
+                <div class="blog-meta mb-4">
+                    <span>{{ post.date }}</span>
+                    <span>{{ post.keywords|join(" • ") }}</span>
+                </div>
+
+                <img
+                        src="{{ url_for('static', filename=post.image) }}"
+                        alt="{{ post.title }}"
+                        class="blog-detail-image"
+                        loading="lazy">
+
+                {% for paragraph in post.content %}
+                <p>{{ paragraph }}</p>
+                {% endfor %}
+
+                <div class="blog-cta">
+                    <h2>Explore products mentioned in this guide</h2>
+                    <p>Open our product collection and compare options across Flipkart, Amazon and Meesho.</p>
+                    <a href="{{ url_for('products_page') }}" class="glass-btn">Browse Products</a>
+                </div>
+            </div>
+
+            <aside class="blog-sidebar">
+                <h2>More Guides</h2>
+                {% for item in posts if item.slug != post.slug %}
+                <a href="{{ url_for('blog_detail', slug=item.slug) }}" class="sidebar-post">
+                    <span>{{ item.category }}</span>
+                    <strong>{{ item.title }}</strong>
+                </a>
+                {% endfor %}
+            </aside>
+        </div>
+    </div>
+</article>
+
+{% endblock %}

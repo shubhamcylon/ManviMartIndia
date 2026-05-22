@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Page Header -->
+
+<section class="py-5 text-center">
+
+    <div class="container">
+
+        <h1 class="fw-bold">
+            Privacy Policy
+        </h1>
+
+        <p class="text-muted">
+            This Privacy Policy explains how ManviMart
+            (referred to as "we", "our", or "us")
+            collects, uses, and protects your personal
+            information when you use our website.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- Policy Content -->
+
+<section class="pb-5">
+
+    <div class="container">
+
+        <div class="glass-why text-black p-5">
+
+
+            <h4 class="fw-bold mb-3">
+                1. Information We Collect
+            </h4>
+
+            <p>
+                When you use ManviMart, we may collect certain
+                information including your name, email address,
+                phone number, messages sent through forms, and browsing details.
+            </p>
+
+            <p>
+                This information may be collected when you:
+            </p>
+
+            <ul>
+
+                <li>Create an account</li>
+                <li>Contact customer support</li>
+                <li>Subscribe to updates or offers</li>
+
+            </ul>
+
+
+            <h4 class="fw-bold mt-4 mb-3">
+                2. How We Use Your Information
+            </h4>
+
+            <p>
+                We use your information to:
+            </p>
+
+            <ul>
+
+                <li>Process and deliver your orders</li>
+                <li>Improve our website and services</li>
+                <li>Communicate with you regarding orders or updates</li>
+                <li>Provide customer support</li>
+                <li>Send promotional offers (if subscribed)</li>
+
+            </ul>
+
+
+            <h4 class="fw-bold mt-4 mb-3">
+                3. Data Protection
+            </h4>
+
+            <p>
+                ManviMart takes appropriate security measures
+                to protect your personal information from
+                unauthorized access, misuse, or disclosure.
+            </p>
+
+            <p>
+                However, no method of transmission over the internet
+                is completely secure.
+            </p>
+
+
+            <h4 class="fw-bold mt-4 mb-3">
+                4. Sharing of Information
+            </h4>
+
+            <p>
+                We do not sell, trade, or rent your personal
+                information to third parties.
+            </p>
+
+            <p>
+                Your information may be shared with trusted
+                service providers only when necessary for:
+            </p>
+
+            <ul>
+
+                <li>Payment processing</li>
+                <li>Order delivery</li>
+                <li>Website operation</li>
+
+            </ul>
+
+
+            <h4 class="fw-bold mt-4 mb-3">
+                5. Cookies
+            </h4>
+
+            <p>
+                Our website may use cookies to enhance user
+                experience and analyze website traffic.
+                Cookies help us remember your preferences
+                and improve site functionality.
+            </p>
+
+
+            <h4 class="fw-bold mt-4 mb-3">
+                6. Changes to This Policy
+            </h4>
+
+            <p>
+                ManviMart reserves the right to update or modify
+                this Privacy Policy at any time. Any changes will
+                be reflected on this page.
+            </p>
+
+
+            <h4 class="fw-bold mt-4 mb-3">
+                7. Contact Information
+            </h4>
+
+            <p>
+                If you have questions regarding this Privacy Policy,
+                please contact us.
+            </p>
+
+            <p>
+
+                <strong>Email:</strong> {{ store_email }} <br>
+                <strong>Contact Page:</strong>
+                <a href="{{ url_for('contact') }}">
+                    Contact Us
+                </a>
+
+            </p>
+
+
+            <p class="text-muted small mt-4">
+                Last Updated: March 2026
+            </p>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
