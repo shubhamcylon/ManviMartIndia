@@ -1,64 +1,46 @@
 {% extends "base.html" %}
 
-{% block title %}{{ product.name }} - Manvi Mart India{% endblock %}
-{% block meta_description %}Compare {{ product.name }} across trusted marketplace links from Manvi Mart India.{% endblock %}
+{% block title %}{{ product.name }} | Manvi Mart India{% endblock %}
+{% block meta_description %}View details, photos and marketplace links for {{ product.name }} on Manvi Mart India.{% endblock %}
 
 {% block content %}
 
+{% set gallery = product.gallery if product.gallery else [product.image] %}
+
 <section class="py-5">
     <div class="container">
-        <div class="row g-5 align-items-center">
-            <div class="col-lg-6">
-                <div class="product-detail-image">
-                    <img
-                            src="{{ url_for('static', filename=product.image) }}"
-                            alt="{{ product.name }}"
-                            loading="lazy">
-                </div>
+        <div class="detail-layout">
+            <div class="detail-gallery">
+                {% for photo in gallery %}
+                    <div class="detail-gallery-item">
+                        <img src="{{ url_for('static', filename=photo) }}" alt="{{ product.name }} image {{ loop.index }}" loading="lazy">
+                    </div>
+                {% endfor %}
             </div>
 
-            <div class="col-lg-6">
-                <p class="category-kicker mb-2">Manvi Mart Pick</p>
-                <h1 class="fw-bold text-dark mb-3">{{ product.name }}</h1>
-                <div class="d-flex align-items-center gap-2 mb-3 flex-wrap">
-                    <span class="fs-3 fw-bold text-dark">₹{{ product.price }}</span>
-                    <span class="product-mrp">₹{{ (product.price * 1.35)|round|int }}</span>
-                    <span class="product-save">Limited pick</span>
-                </div>
-                <p class="text-muted mb-4">{{ product.description }}</p>
+            <aside class="detail-info">
+                <p class="category-kicker mb-2">{{ categories.get(product.category, product.category|replace('-', ' ')|title) }}</p>
+                <h1 class="detail-title">{{ product.name }}</h1>
+                <p class="detail-price">₹{{ product.price }}</p>
+                <p class="detail-copy">{{ product.description }}</p>
 
                 <div class="marketplace-actions detail-actions">
-                    <a href="{{ marketplace_url(product, 'flipkart') }}" class="btn marketplace-btn flipkart-btn">
-                        <img src="{{ url_for('static', filename='assets/img/flipkart.svg') }}" alt="" aria-hidden="true">
-                        Flipkart Soon
-                    </a>
-                    <a href="{{ marketplace_url(product, 'amazon') }}" class="btn marketplace-btn amazon-btn">
-                        <img src="{{ url_for('static', filename='assets/img/amazon.svg') }}" alt="" aria-hidden="true">
-                        Amazon Soon
-                    </a>
-                    <a href="{{ marketplace_url(product, 'meesho') }}" class="btn marketplace-btn meesho-btn">
-                        <img src="{{ url_for('static', filename='assets/img/meesho.svg') }}" alt="" aria-hidden="true">
-                        Meesho
-                    </a>
+                    <a href="{{ marketplace_url(product, 'flipkart') }}" class="btn marketplace-btn">Flipkart Soon</a>
+                    <a href="{{ marketplace_url(product, 'amazon') }}" class="btn marketplace-btn">Amazon Soon</a>
+                    <a href="{{ marketplace_url(product, 'meesho') }}" class="btn marketplace-btn">Meesho</a>
                 </div>
 
                 <div class="product-meta mt-4">
-                    <span>GST inclusive</span>
+                    <span>GST Inclusive</span>
                     <span>HSN {{ product.hsn }}</span>
-                    <span>Category: {{ categories.get(product.category, product.category|replace('-', ' ')|title) if categories else product.category }}</span>
                 </div>
-
-                <div class="marketplace-note mt-4">
-                    <strong>How buying works:</strong>
-                    Product discovery happens on Manvi Mart. Final price, delivery, return and payment are handled by the marketplace you choose.
-                </div>
-            </div>
+            </aside>
         </div>
     </div>
 </section>
 
 {% if related_products %}
-{% set title = "Related Products" %}
+{% set title = "YOU MAY ALSO LIKE" %}
 {% set product_list = related_products %}
 {% include "components/product_section.html" %}
 {% endif %}

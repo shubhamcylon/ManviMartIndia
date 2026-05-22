@@ -1,48 +1,21 @@
-<section class="py-5 product-showcase">
+<section class="product-showcase py-5">
+    <div class="container">
+        <div class="product-showcase-head">
+            <h2 class="product-showcase-title">{{ title }}</h2>
+            <a href="{{ url_for('products_page') }}" class="product-view-link">VIEW ALL</a>
+        </div>
 
-<div class="container">
-
-<div class="product-showcase-head">
-<div>
-<p class="product-kicker mb-2">
-Featured Picks
-</p>
-<h3 class="product-showcase-title">
-{{ title }}
-</h3>
-<p class="product-showcase-copy">
-Curated products ready for quick shopping
-</p>
-</div>
-
-<a href="{{ url_for('products_page') }}" class="product-view-link">
-View all
-</a>
-</div>
-
-<div class="product-grid">
-
-{% set visible_products = product_list if product_list is defined else products %}
-
-{% if visible_products %}
-
-{% for product in visible_products %}
-
-{% include "components/product_card.html" %}
-
-{% endfor %}
-
-{% else %}
-
-<div class="empty-products">
-    <p class="text-muted mb-3">No products available right now.</p>
-    <a href="{{ url_for('products_page') }}" class="btn btn-outline-success">Browse All Products</a>
-</div>
-
-{% endif %}
-
-</div>
-
-</div>
-
+        {% set visible_products = product_list if product_list is defined else products %}
+        <div class="product-grid">
+            {% if visible_products %}
+                {% for product in visible_products %}
+                    {% include "components/product_card.html" %}
+                {% endfor %}
+            {% else %}
+                <div class="empty-products">
+                    <p class="mb-0">No products available right now.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 </section>

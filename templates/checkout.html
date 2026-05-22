@@ -156,12 +156,6 @@
 
                         {% for item in totals.rows %}
                         <div class="d-flex gap-3 py-3 border-bottom">
-                            <img src="{{ url_for('static', filename=item.image) }}"
-                                 width="58"
-                                 height="58"
-                                 class="rounded"
-                                 style="object-fit:contain;background:#f6f8f3;"
-                                 alt="{{ item.name }}">
                             <div class="flex-grow-1">
                                 <div class="fw-semibold">{{ item.name }}</div>
                                 <small class="text-muted">HSN {{ item.hsn }} | GST {{ item.gst_rate }}%</small>

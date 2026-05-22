@@ -1,103 +1,28 @@
-<div class="glass-product-card modern-card">
-
-    <!-- Wishlist -->
-
+<article class="glass-product-card modern-card">
     {% if current_user %}
     <form action="{{ url_for('wishlist_toggle', pid=product.id) }}" method="POST">
-        <button
-                class="glass-wishlist {% if product.id in wishlist_product_ids %}active{% endif %}"
-                type="submit"
-                aria-label="Toggle wishlist">
-            ♥
-        </button>
+        <button class="glass-wishlist {% if product.id in wishlist_product_ids %}active{% endif %}" type="submit" aria-label="Toggle wishlist">♥</button>
     </form>
     {% else %}
-    <a
-            href="{{ url_for('login', next=request.path) }}"
-            class="glass-wishlist"
-            aria-label="Sign in to add wishlist">
-        ♥
-    </a>
+    <a href="{{ url_for('login', next=request.path) }}" class="glass-wishlist" aria-label="Sign in to add wishlist">♥</a>
     {% endif %}
 
+    <a href="{{ url_for('product_detail', pid=product.id) }}" class="product-image-wrap">
+        <img
+            src="{{ url_for('static', filename=product.image) if product.image else url_for('static', filename='assets/img/bannerimg.png') }}"
+            alt="{{ product.name }}"
+            class="product-image"
+            loading="lazy">
+    </a>
 
-    <!-- Product Image -->
-
-    <div class="product-img-wrapper modern-img">
-
-        <a href="{{ url_for('product_detail', pid=product.id) }}">
-
-            <img
-                    src="{{ url_for('static', filename=product.image) }}"
-                    class="glass-product-img modern-img-el"
-                    alt="{{ product.name }}"
-                    loading="lazy">
-
-        </a>
-
+    <div class="product-card-body">
+        <p class="product-category-label">{{ categories.get(product.category, product.category|replace('-', ' ')|title) }}</p>
+        <h3 class="product-title">
+            <a href="{{ url_for('product_detail', pid=product.id) }}" class="product-title-link">{{ product.name }}</a>
+        </h3>
+        <div class="product-bottom">
+            <span class="product-price">₹{{ product.price }}</span>
+            <a href="{{ url_for('product_detail', pid=product.id) }}" class="product-view-link">VIEW</a>
+        </div>
     </div>
-
-
-    <!-- Product Info -->
-
-    <div class="p-3 pt-1 text-black d-flex flex-column flex-grow-1">
-
-        <div class="product-rating">
-            <i class="fa-solid fa-star"></i>
-            4.6 | Popular
-        </div>
-
-        <!-- Product Name -->
-
-        <h6 class="fw-semibold mb-1 product-title modern-title">
-
-            {{ product.name }}
-
-        </h6>
-
-        <p class="product-card-copy mb-2">
-            {{ product.description }}
-        </p>
-
-
-        <!-- Price -->
-
-        <div class="d-flex align-items-center gap-2 mb-3 flex-wrap">
-
-            <span class="product-price modern-price">₹{{ product.price }}</span>
-            <span class="product-mrp">₹{{ (product.price * 1.35)|round|int }}</span>
-            <span class="product-save">Save {{ ((1 - (product.price / (product.price * 1.35))) * 100)|round|int }}%</span>
-
-        </div>
-
-
-        <!-- Marketplace Buttons -->
-
-        <div class="marketplace-actions mt-auto">
-
-            <a href="{{ marketplace_url(product, 'flipkart') }}"
-               class="btn btn-sm marketplace-btn flipkart-btn"
-               aria-label="Flipkart listing coming soon for {{ product.name }}">
-                <img src="{{ url_for('static', filename='assets/img/flipkart.svg') }}" alt="" aria-hidden="true">
-                Flipkart Soon
-            </a>
-
-            <a href="{{ marketplace_url(product, 'amazon') }}"
-               class="btn btn-sm marketplace-btn amazon-btn"
-               aria-label="Amazon listing coming soon for {{ product.name }}">
-                <img src="{{ url_for('static', filename='assets/img/amazon.svg') }}" alt="" aria-hidden="true">
-                Amazon Soon
-            </a>
-
-            <a href="{{ marketplace_url(product, 'meesho') }}"
-               class="btn btn-sm marketplace-btn meesho-btn"
-               aria-label="View {{ product.name }} on Meesho">
-                <img src="{{ url_for('static', filename='assets/img/meesho.svg') }}" alt="" aria-hidden="true">
-                Meesho
-            </a>
-
-        </div>
-
-    </div>
-
-</div>
+</article>

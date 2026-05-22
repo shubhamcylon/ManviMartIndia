@@ -1,245 +1,63 @@
 {% extends "base.html" %}
 
-{% block title %}Manvi Mart India - Affordable T-shirts, Co-ord Sets and Tops{% endblock %}
-{% block meta_description %}Shop Manvi Mart India clothing picks including t-shirts, oversize t-shirts, co-ord sets and female tops. Marketplace links are updated as stores go live.{% endblock %}
+{% block title %}Manvi Mart India | New Collection{% endblock %}
+{% block meta_description %}Shop new clothing collection from Manvi Mart India with minimalist fashion styling and curated product picks.{% endblock %}
 
 {% block content %}
 
-<!-- Hero Section -->
-
 <section class="home-hero">
-
-<div class="container">
-
-<div class="hero-content">
-
-<span class="hero-badge">
-<i class="fa-solid fa-bolt"></i>
-Fresh clothing picks
-</span>
-
-<h1 class="hero-title">
-Shop Manvi Mart India clothing picks
-</h1>
-
-<p class="hero-copy">
-Discover t-shirts, oversize t-shirts, co-ord sets and female tops with real product photos.
-Meesho is live first; Amazon and Flipkart links will be added soon.
-</p>
-
-<div class="hero-actions">
-<a href="{{ url_for('products_page') }}" class="glass-btn">
-Explore Products
-</a>
-<a href="{{ url_for('category_page', slug='new-arrivals') }}" class="hero-secondary-btn">
-View New Arrivals
-</a>
-</div>
-
-<div class="hero-proof">
-<div class="hero-proof-item">
-<strong>Meesho First</strong>
-<span>More marketplaces soon</span>
-</div>
-<div class="hero-proof-item">
-<strong>GST Ready</strong>
-<span>Transparent product info</span>
-</div>
-<div class="hero-proof-item">
-<strong>Curated</strong>
-<span>Clothing-only catalog</span>
-</div>
-</div>
-
-</div>
-
-</div>
-
+    <img src="{{ url_for('static', filename='assets/img/products/women-burgundy-floral-top-front.png') }}" alt="New season look" class="home-hero-image">
+    <div class="home-hero-content">
+        <p class="hero-eyebrow">NEW COLLECTION</p>
+        <h1 class="hero-title">WOMAN 2026</h1>
+        <a href="{{ url_for('category_page', slug='women') }}" class="hero-link">SHOP NOW</a>
+    </div>
 </section>
 
-<section class="trust-strip">
-<div class="container">
-<div class="trust-grid">
-<div class="trust-item">
-<span class="trust-icon"><i class="fa-solid fa-shield-halved"></i></span>
-<div>
-<strong>Trusted Buying</strong>
-<span>Open products on known marketplaces</span>
-</div>
-</div>
-<div class="trust-item">
-<span class="trust-icon"><i class="fa-solid fa-tags"></i></span>
-<div>
-<strong>Easy Price Check</strong>
-<span>Compare before you purchase</span>
-</div>
-</div>
-<div class="trust-item">
-<span class="trust-icon"><i class="fa-solid fa-box-open"></i></span>
-<div>
-<strong>Clothing Categories</strong>
-<span>T-shirts, co-ord sets and tops</span>
-</div>
-</div>
-<div class="trust-item">
-<span class="trust-icon"><i class="fa-solid fa-headset"></i></span>
-<div>
-<strong>Customer Support</strong>
-<span>Reach us for product help</span>
-</div>
-</div>
-</div>
-</div>
+<section class="collection-band py-5">
+    <div class="container">
+        <div class="collection-grid">
+            <a href="{{ url_for('category_page', slug='women') }}" class="collection-card">
+                <img src="{{ url_for('static', filename='assets/img/products/women-orange-floral-top-front.png') }}" alt="Woman collection">
+                <span>WOMAN</span>
+            </a>
+            <a href="{{ url_for('category_page', slug='men') }}" class="collection-card">
+                <img src="{{ url_for('static', filename='assets/img/products/men-draw-black-tshirt.png') }}" alt="Man collection">
+                <span>MAN</span>
+            </a>
+        </div>
+    </div>
 </section>
 
-
-<!-- Categories -->
-
-<section class="py-5 modern-category-section">
-
-<div class="container">
-
-<div class="text-center mb-4">
-<p class="category-kicker mb-2">
-Explore Collections
-</p>
-<h2 class="modern-heading">
-Shop by Category
-</h2>
-<p class="text-muted mb-0">
-Fresh clothing picks arranged by category
-</p>
-</div>
-
-<div class="category-grid">
-
-<!-- T-SHIRTS -->
-<a href="{{ url_for('category_page', slug='tshirt') }}" class="modern-category-card">
-<div class="category-image-panel">
-<img src="{{ url_for('static', filename='assets/img/products/product-12.jpg') }}">
-</div>
-<div class="category-card-body">
-<div>
-<span class="category-label">T-shirts</span>
-<span class="category-status">Available now</span>
-</div>
-<span class="category-arrow">›</span>
-</div>
-</a>
-
-<!-- OVERSIZE T-SHIRTS -->
-<a href="{{ url_for('category_page', slug='oversize-tshirt') }}" class="modern-category-card">
-<div class="category-image-panel">
-<img src="{{ url_for('static', filename='assets/img/products/product-01.jpg') }}">
-</div>
-<div class="category-card-body">
-<div>
-<span class="category-label">Oversize T-shirts</span>
-<span class="category-status">Available now</span>
-</div>
-<span class="category-arrow">›</span>
-</div>
-</a>
-
-<!-- CO-ORD SETS -->
-<a href="{{ url_for('category_page', slug='coord-set') }}" class="modern-category-card">
-<div class="category-image-panel">
-<img src="{{ url_for('static', filename='assets/img/products/product-25.jpg') }}">
-</div>
-<div class="category-card-body">
-<div>
-<span class="category-label">Co-ord Sets</span>
-<span class="category-status">Available now</span>
-</div>
-<span class="category-arrow">›</span>
-</div>
-</a>
-
-<!-- FEMALE TOPS -->
-<a href="{{ url_for('category_page', slug='female-top') }}" class="modern-category-card">
-<div class="category-image-panel">
-<img src="{{ url_for('static', filename='assets/img/products/product-26.jpg') }}">
-</div>
-<div class="category-card-body">
-<div>
-<span class="category-label">Female Tops</span>
-<span class="category-status">Available now</span>
-</div>
-<span class="category-arrow">›</span>
-</div>
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- TRENDING PRODUCTS -->
-
-{% set title = "Trending Products" %}
+{% set title = "NEW IN" %}
 {% set product_list = products %}
 {% include "components/product_section.html" %}
 
-
-<!-- BLOGS -->
-
-<section class="py-5">
-<div class="container">
-<div class="product-showcase-head">
-<div>
-<p class="product-kicker mb-2">Shopping Guides</p>
-<h3 class="product-showcase-title">Latest Blogs</h3>
-<p class="product-showcase-copy">SEO content and buying guides for better product discovery</p>
-</div>
-<a href="{{ url_for('blogs_page') }}" class="product-view-link">View all</a>
-</div>
-
-<div class="blog-grid">
-{% for post in blog_posts[:3] %}
-<article class="blog-card">
-<a href="{{ url_for('blog_detail', slug=post.slug) }}" class="blog-image">
-<img src="{{ url_for('static', filename=post.image) }}" alt="{{ post.title }}" loading="lazy">
-</a>
-<div class="blog-body">
-<div class="blog-meta">
-<span>{{ post.category }}</span>
-<span>{{ post.date }}</span>
-</div>
-<h2>
-<a href="{{ url_for('blog_detail', slug=post.slug) }}">{{ post.title }}</a>
-</h2>
-<p>{{ post.excerpt }}</p>
-<a href="{{ url_for('blog_detail', slug=post.slug) }}" class="blog-read-link">Read Guide</a>
-</div>
-</article>
-{% endfor %}
-</div>
-</div>
-</section>
-
-
-<!-- WHY CHOOSE -->
-
-<section class="py-5">
-
-<div class="container">
-
-<div class="glass-why text-center">
-
-<h2 class="fw-bold mb-3 text-black">
-Why Choose Manvi Mart India?
-</h2>
-
-<p class="text-muted mb-0">
-We keep the shopping path simple: discover products here, compare them on trusted marketplaces, and purchase from the store that gives you the best deal.
-</p>
-
-</div>
-
-</div>
-
+<section class="py-5 editorial-band">
+    <div class="container">
+        <div class="product-showcase-head">
+            <h2 class="product-showcase-title">EDITORIAL</h2>
+            <a href="{{ url_for('blogs_page') }}" class="product-view-link">READ ALL</a>
+        </div>
+        <div class="blog-grid">
+            {% for post in blog_posts[:3] %}
+            <article class="blog-card">
+                <a href="{{ url_for('blog_detail', slug=post.slug) }}" class="blog-image">
+                    <img src="{{ url_for('static', filename=post.image) }}" alt="{{ post.title }}" loading="lazy">
+                </a>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span>{{ post.date }}</span>
+                    </div>
+                    <h2>
+                        <a href="{{ url_for('blog_detail', slug=post.slug) }}">{{ post.title }}</a>
+                    </h2>
+                    <a href="{{ url_for('blog_detail', slug=post.slug) }}" class="blog-read-link">READ</a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
 </section>
 
 {% endblock %}
