@@ -22,6 +22,7 @@
                 <p class="category-kicker mb-2">{{ categories.get(product.category, product.category|replace('-', ' ')|title) }}</p>
                 <h1 class="detail-title">{{ product.name }}</h1>
                 <p class="detail-price">₹{{ product.price }}</p>
+                <p class="text-muted small mb-2">MRP (inclusive of all taxes)</p>
                 <p class="detail-copy">{{ product.description }}</p>
 
                 <div class="marketplace-actions detail-actions">
@@ -32,8 +33,14 @@
 
                 <div class="product-meta mt-4">
                     <span>GST Inclusive</span>
+                    <span>GST {{ product.gst_rate }}%</span>
                     <span>HSN {{ product.hsn }}</span>
+                    <span>Country of Origin: {{ product.country_of_origin }}</span>
+                    <span>Net Qty: {{ product.net_quantity }}</span>
                 </div>
+                <p class="text-muted small mt-3 mb-0">
+                    Final payable amount is shown at checkout in INR with complete tax breakup.
+                </p>
             </aside>
         </div>
     </div>

@@ -64,11 +64,12 @@ products = [
         "gst_rate": 5,
         "category": "tshirt",
         "description": "Cotton graphic t-shirt with a clean regular fit and soft hand feel.",
-        "image": "assets/img/products/men-draw-black-tshirt.png",
+        "image": "assets/img/products/men-draw-black-tshirt.jpg",
         "gallery": [
-            "assets/img/products/men-draw-black-tshirt.png",
-            "assets/img/products/men-green-graphic-tshirt-detail.png",
-            "assets/img/products/men-confused-black-tshirt-side.png",
+            "assets/img/products/men-draw-black-tshirt.jpg",
+            "assets/img/products/men-draw-black-tshirt-front-alt.jpg",
+            "assets/img/products/men-draw-black-tshirt-back.jpg",
+            "assets/img/products/men-draw-black-tshirt-detail.jpg",
         ],
     },
     {
@@ -79,11 +80,12 @@ products = [
         "gst_rate": 5,
         "category": "oversize-tshirt",
         "description": "Black statement graphic t-shirt designed for everyday street styling.",
-        "image": "assets/img/products/men-confused-black-tshirt-front.png",
+        "image": "assets/img/products/men-confused-black-tshirt-front.jpg",
         "gallery": [
-            "assets/img/products/men-confused-black-tshirt-front.png",
-            "assets/img/products/men-confused-black-tshirt-side.png",
-            "assets/img/products/men-green-graphic-tshirt-detail.png",
+            "assets/img/products/men-confused-black-tshirt-front.jpg",
+            "assets/img/products/men-confused-black-tshirt-side.jpg",
+            "assets/img/products/men-confused-black-tshirt-back.jpg",
+            "assets/img/products/men-confused-black-tshirt-detail.jpg",
         ],
     },
     {
@@ -94,12 +96,12 @@ products = [
         "gst_rate": 5,
         "category": "female-top",
         "description": "Flowy floral top in deep burgundy with embroidered neckline details.",
-        "image": "assets/img/products/women-burgundy-floral-top-front.png",
+        "image": "assets/img/products/women-burgundy-floral-top-front.jpg",
         "gallery": [
-            "assets/img/products/women-burgundy-floral-top-front.png",
-            "assets/img/products/women-burgundy-floral-top-side.png",
-            "assets/img/products/women-burgundy-floral-top-back.png",
-            "assets/img/products/women-burgundy-floral-top-detail.png",
+            "assets/img/products/women-burgundy-floral-top-front.jpg",
+            "assets/img/products/women-burgundy-floral-top-side.jpg",
+            "assets/img/products/women-burgundy-floral-top-back.jpg",
+            "assets/img/products/women-burgundy-floral-top-detail.jpg",
         ],
     },
     {
@@ -110,12 +112,12 @@ products = [
         "gst_rate": 5,
         "category": "female-top",
         "description": "Bright orange printed top with lightweight drape and relaxed shape.",
-        "image": "assets/img/products/women-orange-floral-top-front.png",
+        "image": "assets/img/products/women-orange-floral-top-front.jpg",
         "gallery": [
-            "assets/img/products/women-orange-floral-top-front.png",
-            "assets/img/products/women-orange-floral-top-side.png",
-            "assets/img/products/women-orange-floral-top-back.png",
-            "assets/img/products/women-orange-floral-top-detail.png",
+            "assets/img/products/women-orange-floral-top-front.jpg",
+            "assets/img/products/women-orange-floral-top-side.jpg",
+            "assets/img/products/women-orange-floral-top-back.jpg",
+            "assets/img/products/women-orange-floral-top-detail.jpg",
         ],
     },
     {
@@ -126,12 +128,12 @@ products = [
         "gst_rate": 5,
         "category": "female-top",
         "description": "Soft pink floral top with airy sleeves and a statement silhouette.",
-        "image": "assets/img/products/women-pink-floral-top-front.png",
+        "image": "assets/img/products/women-pink-floral-top-front.jpg",
         "gallery": [
-            "assets/img/products/women-pink-floral-top-front.png",
-            "assets/img/products/women-pink-floral-top-side.png",
-            "assets/img/products/women-pink-floral-top-back.png",
-            "assets/img/products/women-pink-floral-top-detail.png",
+            "assets/img/products/women-pink-floral-top-front.jpg",
+            "assets/img/products/women-pink-floral-top-side.jpg",
+            "assets/img/products/women-pink-floral-top-back.jpg",
+            "assets/img/products/women-pink-floral-top-detail.jpg",
         ],
     },
     {
@@ -142,14 +144,304 @@ products = [
         "gst_rate": 5,
         "category": "tshirt",
         "description": "Neutral beige t-shirt with clean graphic placement and modern fit.",
-        "image": "assets/img/products/300CAE19-CB20-495E-8EB3-84E5FC738FBB.PNG",
+        "image": "assets/img/products/men-breeze-beige-tshirt-front.jpg",
         "gallery": [
-            "assets/img/products/300CAE19-CB20-495E-8EB3-84E5FC738FBB.PNG",
-            "assets/img/products/C46432D8-6B7E-4771-B6A8-95674C006534.PNG",
-            "assets/img/products/men-green-graphic-tshirt-detail.png",
+            "assets/img/products/men-breeze-beige-tshirt-front.jpg",
+            "assets/img/products/men-breeze-beige-tshirt-side.jpg",
+            "assets/img/products/men-breeze-beige-tshirt-back.jpg",
+            "assets/img/products/men-breeze-beige-tshirt-detail.jpg",
         ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 7,
+        "name": "Future Yellow T-shirt",
+        "price": 899,
+        "hsn": "6109",
+        "gst_rate": 5,
+        "category": "tshirt",
+        "description": "Bright yellow crew neck tee with FUTURE chest graphic for daily wear.",
+        "image": "assets/img/products/men-future-yellow-tshirt-front.jpg",
+        "gallery": [
+            "assets/img/products/men-future-yellow-tshirt-front.jpg",
+            "assets/img/products/men-future-yellow-tshirt-front-alt.jpg",
+            "assets/img/products/men-future-yellow-tshirt-back.jpg",
+            "assets/img/products/men-future-yellow-tshirt-detail.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 8,
+        "name": "Strong Yellow T-shirt",
+        "price": 899,
+        "hsn": "6109",
+        "gst_rate": 5,
+        "category": "tshirt",
+        "description": "Athletic yellow t-shirt featuring a bold BE STRONG slogan print.",
+        "image": "assets/img/products/men-strong-yellow-tshirt-front.jpg",
+        "gallery": [
+            "assets/img/products/men-strong-yellow-tshirt-front.jpg",
+            "assets/img/products/men-strong-yellow-tshirt-side.jpg",
+            "assets/img/products/men-strong-yellow-tshirt-back.jpg",
+            "assets/img/products/men-strong-yellow-tshirt-detail.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 9,
+        "name": "Think Coral T-shirt",
+        "price": 949,
+        "hsn": "6109",
+        "gst_rate": 5,
+        "category": "tshirt",
+        "description": "Coral streetwear tee with THINK typography and relaxed fit shape.",
+        "image": "assets/img/products/men-think-coral-tshirt-front.jpg",
+        "gallery": [
+            "assets/img/products/men-think-coral-tshirt-front.jpg",
+            "assets/img/products/men-think-coral-tshirt-front-alt.jpg",
+            "assets/img/products/men-think-coral-tshirt-back.jpg",
+            "assets/img/products/men-think-coral-tshirt-detail.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 10,
+        "name": "Vibes Blue T-shirt",
+        "price": 949,
+        "hsn": "6109",
+        "gst_rate": 5,
+        "category": "tshirt",
+        "description": "Blue graphic t-shirt with VIBES chest artwork and a soft finish.",
+        "image": "assets/img/products/men-vibes-blue-tshirt-front.jpg",
+        "gallery": [
+            "assets/img/products/men-vibes-blue-tshirt-front.jpg",
+            "assets/img/products/men-vibes-blue-tshirt-side.jpg",
+            "assets/img/products/men-vibes-blue-tshirt-back.jpg",
+            "assets/img/products/men-vibes-blue-tshirt-detail.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 11,
+        "name": "Vibes Grey T-shirt",
+        "price": 949,
+        "hsn": "6109",
+        "gst_rate": 5,
+        "category": "tshirt",
+        "description": "Cool grey graphic tee with minimal contrast print and clean silhouette.",
+        "image": "assets/img/products/men-vibes-grey-tshirt-front.jpg",
+        "gallery": [
+            "assets/img/products/men-vibes-grey-tshirt-front.jpg",
+            "assets/img/products/men-vibes-grey-tshirt-front-alt.jpg",
+            "assets/img/products/men-vibes-grey-tshirt-back.jpg",
+            "assets/img/products/men-vibes-grey-tshirt-detail.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 12,
+        "name": "Expand Green T-shirt",
+        "price": 949,
+        "hsn": "6109",
+        "gst_rate": 5,
+        "category": "tshirt",
+        "description": "Muted green tee with EXPAND print and everyday regular fit profile.",
+        "image": "assets/img/products/men-expand-green-tshirt-front.jpg",
+        "gallery": [
+            "assets/img/products/men-expand-green-tshirt-front.jpg",
+            "assets/img/products/men-expand-green-tshirt-front-alt.jpg",
+            "assets/img/products/men-expand-green-tshirt-back.jpg",
+            "assets/img/products/men-green-graphic-tshirt-detail.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 13,
+        "name": "Destiny Green T-shirt",
+        "price": 949,
+        "hsn": "6109",
+        "gst_rate": 5,
+        "category": "tshirt",
+        "description": "Deep green crew neck t-shirt with BRING DESTINY centered typography.",
+        "image": "assets/img/products/men-destiny-green-tshirt-front.jpg",
+        "gallery": [
+            "assets/img/products/men-destiny-green-tshirt-front.jpg",
+            "assets/img/products/men-destiny-green-tshirt-side.jpg",
+            "assets/img/products/men-destiny-green-tshirt-back.jpg",
+            "assets/img/products/men-destiny-green-tshirt-detail.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 14,
+        "name": "Embrace Black T-shirt",
+        "price": 949,
+        "hsn": "6109",
+        "gst_rate": 5,
+        "category": "tshirt",
+        "description": "Classic black t-shirt with EMBRACE statement block artwork.",
+        "image": "assets/img/products/men-embrace-black-tshirt-front.jpg",
+        "gallery": [
+            "assets/img/products/men-embrace-black-tshirt-front.jpg",
+            "assets/img/products/men-embrace-black-tshirt-side.jpg",
+            "assets/img/products/men-embrace-black-tshirt-back.jpg",
+            "assets/img/products/men-embrace-black-tshirt-detail.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 15,
+        "name": "Adventure Coral T-shirt",
+        "price": 949,
+        "hsn": "6109",
+        "gst_rate": 5,
+        "category": "tshirt",
+        "description": "Coral crew neck tee with ADVENTURE chest print and clean drape.",
+        "image": "assets/img/products/men-adventure-coral-tshirt-front.jpg",
+        "gallery": [
+            "assets/img/products/men-adventure-coral-tshirt-front.jpg",
+            "assets/img/products/men-adventure-coral-tshirt-side.jpg",
+            "assets/img/products/men-adventure-coral-tshirt-back.jpg",
+            "assets/img/products/men-adventure-coral-tshirt-detail.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 16,
+        "name": "White Floral Co-ord Set",
+        "price": 1999,
+        "hsn": "6204",
+        "gst_rate": 5,
+        "category": "coord-set",
+        "description": "Flowy white floral co-ord with wide-leg fit for summer styling.",
+        "image": "assets/img/products/women-white-floral-coord-set-front.jpg",
+        "gallery": [
+            "assets/img/products/women-white-floral-coord-set-front.jpg",
+            "assets/img/products/women-white-floral-coord-set-side.jpg",
+            "assets/img/products/women-white-floral-coord-set-back.jpg",
+            "assets/img/products/women-white-floral-coord-set-detail-pattern.jpg",
+            "assets/img/products/women-white-floral-coord-set-detail-waistband.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 17,
+        "name": "Aqua Floral Co-ord Set",
+        "price": 1999,
+        "hsn": "6204",
+        "gst_rate": 5,
+        "category": "coord-set",
+        "description": "Aqua floral co-ord with airy shape and statement botanical print.",
+        "image": "assets/img/products/women-aqua-floral-coord-set-front.jpg",
+        "gallery": [
+            "assets/img/products/women-aqua-floral-coord-set-front.jpg",
+            "assets/img/products/women-aqua-floral-coord-set-side.jpg",
+            "assets/img/products/women-aqua-floral-coord-set-back.jpg",
+            "assets/img/products/women-aqua-floral-coord-set-detail-pattern.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 18,
+        "name": "Navy Floral Co-ord Set",
+        "price": 1999,
+        "hsn": "6204",
+        "gst_rate": 5,
+        "category": "coord-set",
+        "description": "Navy floral co-ord set designed with a relaxed and fluid silhouette.",
+        "image": "assets/img/products/women-navy-floral-coord-set-front.jpg",
+        "gallery": [
+            "assets/img/products/women-navy-floral-coord-set-front.jpg",
+            "assets/img/products/women-navy-floral-coord-set-side.jpg",
+            "assets/img/products/women-navy-floral-coord-set-back.jpg",
+            "assets/img/products/women-navy-floral-coord-set-detail-pattern.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 19,
+        "name": "Magenta Leaf Top",
+        "price": 1599,
+        "hsn": "6206",
+        "gst_rate": 5,
+        "category": "female-top",
+        "description": "Magenta printed top with soft texture and gathered yoke detailing.",
+        "image": "assets/img/products/women-magenta-leaf-top-front.jpg",
+        "gallery": [
+            "assets/img/products/women-magenta-leaf-top-front.jpg",
+            "assets/img/products/women-magenta-leaf-top-side.jpg",
+            "assets/img/products/women-magenta-leaf-top-back.jpg",
+            "assets/img/products/women-magenta-leaf-top-detail.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 20,
+        "name": "Olive Leaf Top",
+        "price": 1599,
+        "hsn": "6206",
+        "gst_rate": 5,
+        "category": "female-top",
+        "description": "Olive leaf-print top with flowy sleeves and a flattering fall.",
+        "image": "assets/img/products/women-olive-leaf-top-front.jpg",
+        "gallery": [
+            "assets/img/products/women-olive-leaf-top-front.jpg",
+            "assets/img/products/women-olive-leaf-top-side.jpg",
+            "assets/img/products/women-olive-leaf-top-back.jpg",
+            "assets/img/products/women-olive-leaf-top-detail.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 21,
+        "name": "Teal Leaf Top",
+        "price": 1599,
+        "hsn": "6206",
+        "gst_rate": 5,
+        "category": "female-top",
+        "description": "Teal leaf top with contrast placket texture and lightweight comfort.",
+        "image": "assets/img/products/women-teal-leaf-top-front.jpg",
+        "gallery": [
+            "assets/img/products/women-teal-leaf-top-front.jpg",
+            "assets/img/products/women-teal-leaf-top-side.jpg",
+            "assets/img/products/women-teal-leaf-top-back.jpg",
+            "assets/img/products/women-teal-leaf-top-detail.jpg",
+        ],
+        "is_new_arrival": True,
+    },
+    {
+        "id": 22,
+        "name": "Gysber Blue T-shirt",
+        "price": 949,
+        "hsn": "6109",
+        "gst_rate": 5,
+        "category": "tshirt",
+        "description": "Blue GRYSBER print t-shirt with comfortable fit and daily styling.",
+        "image": "assets/img/products/men-gysber-blue-tshirt-front.jpg",
+        "gallery": [
+            "assets/img/products/men-gysber-blue-tshirt-front.jpg",
+            "assets/img/products/men-gysber-blue-tshirt-front-alt.jpg",
+            "assets/img/products/men-gysber-blue-tshirt-back.jpg",
+            "assets/img/products/men-gysber-blue-tshirt-detail.jpg",
+        ],
+        "is_new_arrival": True,
     },
 ]
+
+# Category-first pricing requested for current collection.
+CATEGORY_BASE_PRICES = {
+    "tshirt": 299,
+    "oversize-tshirt": 499,
+    "coord-set": 499,
+    "female-top": 399,
+}
+
+for product in products:
+    category = product.get("category")
+    if category in CATEGORY_BASE_PRICES:
+        product["price"] = CATEGORY_BASE_PRICES[category]
+    product.setdefault("country_of_origin", "India")
+    product.setdefault("net_quantity", "1 N")
 
 INDIAN_STATES = {
     "Andaman and Nicobar Islands": "35",
@@ -225,7 +517,7 @@ blog_posts = [
         "excerpt": "Simple styling ideas for pairing men's t-shirts, lowers and trousers for daily wear.",
         "category": "Men Fashion",
         "date": "May 9, 2026",
-        "image": "assets/img/male-category.png",
+        "image": "assets/img/products/men-think-coral-tshirt-front.jpg",
         "keywords": ["men t-shirt", "men lower", "men trouser"],
         "content": [
             "A solid t-shirt with a comfortable lower works well for relaxed daily wear. For a sharper look, pair a clean t-shirt with a smart trouser.",
@@ -238,7 +530,7 @@ blog_posts = [
         "excerpt": "A quick guide to choosing kurtis, kurtas and suit sets by fabric, fit and occasion.",
         "category": "Women Fashion",
         "date": "May 9, 2026",
-        "image": "assets/img/female-category.png",
+        "image": "assets/img/products/women-magenta-leaf-top-front.jpg",
         "keywords": ["kurti", "kurta", "women suit"],
         "content": [
             "Kurtis and kurtas are easy everyday picks, while suit sets work well for functions, office wear and festive occasions.",
@@ -251,7 +543,7 @@ blog_posts = [
         "excerpt": "How to choose comfortable kids t-shirts, lowers and everyday clothing online.",
         "category": "Kids Fashion",
         "date": "May 9, 2026",
-        "image": "assets/img/new-category.png",
+        "image": "assets/img/products/kids-clothes-buying-guide.jpg",
         "keywords": ["kids clothes", "kids t-shirt", "kids lower"],
         "content": [
             "Kids clothing should be soft, breathable and easy to wash. Always choose comfort before heavy design.",
@@ -279,6 +571,7 @@ def marketplace_url(product, marketplace):
 
 def product_matches_category(product, slug):
     product_category = product.get("category")
+    is_new_arrival = product.get("is_new_arrival", False)
     if product_category == slug:
         return True
     if slug == "men":
@@ -294,11 +587,11 @@ def product_matches_category(product, slug):
     if slug == "women-top":
         return product_category == "female-top"
     if slug == "new-arrivals":
-        return product["id"] in {2, 3, 4, 5, 6}
+        return is_new_arrival
     if slug == "men-new-arrival":
-        return product["id"] in {2}
+        return product_category in {"tshirt", "oversize-tshirt"} and is_new_arrival
     if slug == "women-new-arrival":
-        return product["id"] in {4, 5, 6}
+        return product_category in {"coord-set", "female-top"} and is_new_arrival
     return False
 
 

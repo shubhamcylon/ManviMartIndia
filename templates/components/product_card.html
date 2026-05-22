@@ -9,7 +9,7 @@
 
     <a href="{{ url_for('product_detail', pid=product.id) }}" class="product-image-wrap">
         <img
-            src="{{ url_for('static', filename=product.image) if product.image else url_for('static', filename='assets/img/bannerimg.png') }}"
+            src="{{ url_for('static', filename=product.image) if product.image else url_for('static', filename='assets/img/products/women-magenta-leaf-top-front.jpg') }}"
             alt="{{ product.name }}"
             class="product-image"
             loading="lazy">
