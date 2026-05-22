@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}Manvi Mart India - Clothing Brand for Men, Women and Kids{% endblock %}
-{% block meta_description %}Shop clothing on Manvi Mart India. Discover t-shirts, lowers, trousers, suits, kurtis, kurtas and kids clothes, then compare on Flipkart, Amazon and Meesho.{% endblock %}
+{% block title %}Manvi Mart India - Affordable T-shirts, Co-ord Sets and Tops{% endblock %}
+{% block meta_description %}Shop Manvi Mart India clothing picks including t-shirts, oversize t-shirts, co-ord sets and female tops. Marketplace links are updated as stores go live.{% endblock %}
 
 {% block content %}
 
@@ -15,16 +15,16 @@
 
 <span class="hero-badge">
 <i class="fa-solid fa-bolt"></i>
-Fresh marketplace picks
+Fresh clothing picks
 </span>
 
 <h1 class="hero-title">
-Shop smarter with trusted products from Manvi Mart India
+Shop Manvi Mart India clothing picks
 </h1>
 
 <p class="hero-copy">
-Find men, women and kids clothing with quick marketplace links.
-Compare t-shirts, lowers, trousers, suits, kurtis and kurtas before buying.
+Discover t-shirts, oversize t-shirts, co-ord sets and female tops with real product photos.
+Meesho is live first; Amazon and Flipkart links will be added soon.
 </p>
 
 <div class="hero-actions">
@@ -38,8 +38,8 @@ View New Arrivals
 
 <div class="hero-proof">
 <div class="hero-proof-item">
-<strong>3 Stores</strong>
-<span>Flipkart, Amazon, Meesho</span>
+<strong>Meesho First</strong>
+<span>More marketplaces soon</span>
 </div>
 <div class="hero-proof-item">
 <strong>GST Ready</strong>
@@ -78,7 +78,7 @@ View New Arrivals
 <span class="trust-icon"><i class="fa-solid fa-box-open"></i></span>
 <div>
 <strong>Clothing Categories</strong>
-<span>T-shirts, lowers, suits and kids wear</span>
+<span>T-shirts, co-ord sets and tops</span>
 </div>
 </div>
 <div class="trust-item">
@@ -116,7 +116,7 @@ Fresh clothing picks arranged by category
 <!-- T-SHIRTS -->
 <a href="{{ url_for('category_page', slug='tshirt') }}" class="modern-category-card">
 <div class="category-image-panel">
-<img src="{{ url_for('static', filename='assets/img/male-category.png') }}">
+<img src="{{ url_for('static', filename='assets/img/products/product-12.jpg') }}">
 </div>
 <div class="category-card-body">
 <div>
@@ -127,84 +127,42 @@ Fresh clothing picks arranged by category
 </div>
 </a>
 
-<!-- LOWERS -->
-<a href="{{ url_for('category_page', slug='lower') }}" class="modern-category-card">
+<!-- OVERSIZE T-SHIRTS -->
+<a href="{{ url_for('category_page', slug='oversize-tshirt') }}" class="modern-category-card">
 <div class="category-image-panel">
-<img src="{{ url_for('static', filename='assets/img/male-category.png') }}">
+<img src="{{ url_for('static', filename='assets/img/products/product-01.jpg') }}">
 </div>
 <div class="category-card-body">
 <div>
-<span class="category-label">Lowers</span>
+<span class="category-label">Oversize T-shirts</span>
 <span class="category-status">Available now</span>
 </div>
 <span class="category-arrow">›</span>
 </div>
 </a>
 
-<!-- TROUSERS -->
-<a href="{{ url_for('category_page', slug='trouser') }}" class="modern-category-card">
+<!-- CO-ORD SETS -->
+<a href="{{ url_for('category_page', slug='coord-set') }}" class="modern-category-card">
 <div class="category-image-panel">
-<img src="{{ url_for('static', filename='assets/img/male-category.png') }}">
+<img src="{{ url_for('static', filename='assets/img/products/product-25.jpg') }}">
 </div>
 <div class="category-card-body">
 <div>
-<span class="category-label">Trousers</span>
+<span class="category-label">Co-ord Sets</span>
 <span class="category-status">Available now</span>
 </div>
 <span class="category-arrow">›</span>
 </div>
 </a>
 
-<!-- SUIT -->
-<a href="{{ url_for('category_page', slug='suit') }}" class="modern-category-card">
+<!-- FEMALE TOPS -->
+<a href="{{ url_for('category_page', slug='female-top') }}" class="modern-category-card">
 <div class="category-image-panel">
-<img src="{{ url_for('static', filename='assets/img/female-category.png') }}">
+<img src="{{ url_for('static', filename='assets/img/products/product-26.jpg') }}">
 </div>
 <div class="category-card-body">
 <div>
-<span class="category-label">Suit</span>
-<span class="category-status">Available now</span>
-</div>
-<span class="category-arrow">›</span>
-</div>
-</a>
-
-<!-- KURTI -->
-<a href="{{ url_for('category_page', slug='kurti') }}" class="modern-category-card">
-<div class="category-image-panel">
-<img src="{{ url_for('static', filename='assets/img/female-category.png') }}">
-</div>
-<div class="category-card-body">
-<div>
-<span class="category-label">Kurti</span>
-<span class="category-status">Available now</span>
-</div>
-<span class="category-arrow">›</span>
-</div>
-</a>
-
-<!-- KURTA -->
-<a href="{{ url_for('category_page', slug='kurta') }}" class="modern-category-card">
-<div class="category-image-panel">
-<img src="{{ url_for('static', filename='assets/img/female-category.png') }}">
-</div>
-<div class="category-card-body">
-<div>
-<span class="category-label">Kurta</span>
-<span class="category-status">Available now</span>
-</div>
-<span class="category-arrow">›</span>
-</div>
-</a>
-
-<!-- KIDS CLOTHES -->
-<a href="{{ url_for('category_page', slug='kids-clothes') }}" class="modern-category-card">
-<div class="category-image-panel">
-<img src="{{ url_for('static', filename='assets/img/new-category.png') }}">
-</div>
-<div class="category-card-body">
-<div>
-<span class="category-label">Kids Clothes</span>
+<span class="category-label">Female Tops</span>
 <span class="category-status">Available now</span>
 </div>
 <span class="category-arrow">›</span>

@@ -77,16 +77,16 @@
 
             <a href="{{ marketplace_url(product, 'flipkart') }}"
                class="btn btn-sm marketplace-btn flipkart-btn"
-               aria-label="View {{ product.name }} on Flipkart">
+               aria-label="Flipkart listing coming soon for {{ product.name }}">
                 <img src="{{ url_for('static', filename='assets/img/flipkart.svg') }}" alt="" aria-hidden="true">
-                Flipkart
+                Flipkart Soon
             </a>
 
             <a href="{{ marketplace_url(product, 'amazon') }}"
                class="btn btn-sm marketplace-btn amazon-btn"
-               aria-label="View {{ product.name }} on Amazon">
+               aria-label="Amazon listing coming soon for {{ product.name }}">
                 <img src="{{ url_for('static', filename='assets/img/amazon.svg') }}" alt="" aria-hidden="true">
-                Amazon
+                Amazon Soon
             </a>
 
             <a href="{{ marketplace_url(product, 'meesho') }}"

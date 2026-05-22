@@ -58,93 +58,63 @@ serializer = URLSafeTimedSerializer(app.secret_key)
 products = [
     {
         "id": 1,
-        "name": "Men Cotton T-shirt",
-        "price": 499,
-        "image": "assets/img/male-category.png",
+        "name": "Printed T-shirt",
+        "price": 299,
+        "image": "assets/img/products/product-12.jpg",
         "hsn": "6109",
         "gst_rate": 5,
-        "category": "men-tshirt",
-        "description": "Soft cotton t-shirt for daily wear, casual outings and relaxed styling.",
+        "category": "tshirt",
+        "description": "Soft daily-wear printed t-shirt with a comfortable regular fit.",
     },
     {
         "id": 2,
-        "name": "Men Regular Fit Lower",
-        "price": 699,
-        "image": "assets/img/male-category.png",
-        "hsn": "6103",
+        "name": "Oversize Black T-shirt",
+        "price": 499,
+        "image": "assets/img/products/product-01.jpg",
+        "hsn": "6109",
         "gst_rate": 5,
-        "category": "men-lower",
-        "description": "Comfortable lower for travel, lounging, walking and everyday movement.",
+        "category": "oversize-tshirt",
+        "description": "Relaxed oversize black t-shirt for casual, street and travel looks.",
     },
     {
         "id": 3,
-        "name": "Men Smart Trouser",
-        "price": 1199,
-        "image": "assets/img/male-category.png",
-        "hsn": "6203",
+        "name": "Black Co-ord Set",
+        "price": 499,
+        "image": "assets/img/products/product-28.jpg",
+        "hsn": "6104",
         "gst_rate": 5,
-        "category": "men-trouser",
-        "description": "Smart trouser for office, casual events and clean everyday dressing.",
+        "category": "coord-set",
+        "description": "Easy black co-ord set for relaxed outings and everyday comfort.",
     },
     {
         "id": 4,
-        "name": "Women Printed Kurti",
-        "price": 799,
-        "image": "assets/img/female-category.png",
-        "hsn": "6206",
+        "name": "Blue Co-ord Set",
+        "price": 499,
+        "image": "assets/img/products/product-20.jpg",
+        "hsn": "6104",
         "gst_rate": 5,
-        "category": "women-kurti",
-        "description": "Elegant printed kurti for office, college, festive and casual looks.",
+        "category": "coord-set",
+        "description": "Blue printed co-ord styling with light, breezy comfort.",
     },
     {
         "id": 5,
-        "name": "Women Cotton Kurta",
-        "price": 899,
-        "image": "assets/img/female-category.png",
+        "name": "Colorful Co-ord Set",
+        "price": 799,
+        "image": "assets/img/products/product-25.jpg",
         "hsn": "6204",
         "gst_rate": 5,
-        "category": "women-kurta",
-        "description": "Breathable cotton kurta with a clean fit for everyday ethnic wear.",
+        "category": "coord-set",
+        "description": "Colorful printed co-ord set for a bright, easy statement outfit.",
     },
     {
         "id": 6,
-        "name": "Women Suit Set",
-        "price": 1499,
-        "image": "assets/img/female-category.png",
-        "hsn": "6204",
-        "gst_rate": 5,
-        "category": "women-suit",
-        "description": "Ready-to-style suit set for family functions, office days and festive plans.",
-    },
-    {
-        "id": 7,
-        "name": "Kids Printed T-shirt",
+        "name": "Female Printed Top",
         "price": 399,
-        "image": "assets/img/new-category.png",
-        "hsn": "6109",
+        "image": "assets/img/products/product-26.jpg",
+        "hsn": "6206",
         "gst_rate": 5,
-        "category": "kids-tshirt",
-        "description": "Soft printed t-shirt for active kids and daily comfort.",
-    },
-    {
-        "id": 8,
-        "name": "Kids Comfort Lower",
-        "price": 449,
-        "image": "assets/img/new-category.png",
-        "hsn": "6103",
-        "gst_rate": 5,
-        "category": "kids-lower",
-        "description": "Easy-fit lower for school breaks, playtime and relaxed home wear.",
-    },
-    {
-        "id": 9,
-        "name": "Women Comfort Lower",
-        "price": 649,
-        "image": "assets/img/female-category.png",
-        "hsn": "6104",
-        "gst_rate": 5,
-        "category": "women-lower",
-        "description": "Comfortable lower for casual styling, travel and everyday home wear.",
+        "category": "female-top",
+        "description": "Printed female top with a flattering everyday silhouette.",
     },
 ]
 
@@ -195,27 +165,17 @@ PAYMENT_METHODS = {
 
 categories = {
     "tshirt": "T-shirt",
-    "lower": "Lower",
-    "trouser": "Trouser",
-    "suit": "Suit",
-    "kurti": "Kurti",
-    "kurta": "Kurta",
+    "oversize-tshirt": "Oversize T-shirt",
+    "coord-set": "Co-ord Set",
+    "female-top": "Female Top",
     "men": "Men Fashion",
     "men-tshirt": "Men T-shirt",
-    "men-lower": "Men Lower",
-    "men-trouser": "Men Trouser",
+    "men-oversize-tshirt": "Men Oversize T-shirt",
     "men-new-arrival": "Men New Arrival",
     "women": "Women Fashion",
-    "women-suit": "Women Suit",
-    "women-kurti": "Women Kurti",
-    "women-kurta": "Women Kurta",
-    "women-lower": "Women Lower",
+    "women-coord-set": "Women Co-ord Set",
+    "women-top": "Women Top",
     "women-new-arrival": "Women New Arrival",
-    "kids": "Kids Fashion",
-    "kids-tshirt": "Kids T-shirt",
-    "kids-lower": "Kids Lower",
-    "kids-clothes": "Kids Clothes",
-    "kids-new-arrival": "Kids New Arrival",
     "new-arrivals": "New Arrivals",
 }
 
@@ -277,7 +237,11 @@ def get_blog_post(slug):
 
 def marketplace_url(product, marketplace):
     links = product.get("marketplace_urls", {})
-    return links.get(marketplace) or url_for("home")
+    if links.get(marketplace):
+        return links[marketplace]
+    if product.get("id"):
+        return url_for("product_detail", pid=product["id"])
+    return url_for("products_page")
 
 
 def product_matches_category(product, slug):
@@ -285,33 +249,23 @@ def product_matches_category(product, slug):
     if product_category == slug:
         return True
     if slug == "men":
-        return product_category in {"men-tshirt", "men-lower", "men-trouser", "men-new-arrival"}
+        return product_category in {"tshirt", "oversize-tshirt"}
     if slug == "women":
-        return product_category in {"women-suit", "women-kurti", "women-kurta", "women-lower", "women-new-arrival"}
-    if slug == "kids":
-        return product_category in {"kids-tshirt", "kids-lower", "kids-clothes", "kids-new-arrival"}
-    if slug == "kids-clothes":
-        return product_category in {"kids-tshirt", "kids-lower", "kids-clothes"}
+        return product_category in {"coord-set", "female-top"}
     if slug == "tshirt":
-        return product_category in {"men-tshirt", "kids-tshirt"}
-    if slug == "lower":
-        return product_category in {"men-lower", "women-lower", "kids-lower"}
-    if slug == "trouser":
-        return product_category == "men-trouser"
-    if slug == "suit":
-        return product_category == "women-suit"
-    if slug == "kurti":
-        return product_category == "women-kurti"
-    if slug == "kurta":
-        return product_category == "women-kurta"
+        return product_category == "tshirt"
+    if slug in {"men-tshirt", "men-oversize-tshirt"}:
+        return product_category in {"tshirt", "oversize-tshirt"}
+    if slug == "women-coord-set":
+        return product_category == "coord-set"
+    if slug == "women-top":
+        return product_category == "female-top"
     if slug == "new-arrivals":
-        return product["id"] in {3, 6, 7, 8, 9}
+        return product["id"] in {2, 3, 4, 5, 6}
     if slug == "men-new-arrival":
-        return product["id"] in {3}
+        return product["id"] in {2}
     if slug == "women-new-arrival":
-        return product["id"] in {6}
-    if slug == "kids-new-arrival":
-        return product["id"] in {7, 8}
+        return product["id"] in {4, 5, 6}
     return False
 
 

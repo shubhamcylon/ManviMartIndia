@@ -11,7 +11,7 @@
 <div class="d-flex align-items-center mb-3">
 
 <img
-src="{{ url_for('static', filename='assets/img/manvi-mart-logo.png') }}"
+src="{{ url_for('static', filename='assets/img/brand/manvi-mart-logo-white-bg.png') }}"
 alt="ManviMart Logo"
 class="site-logo site-logo-footer me-2">
 
@@ -23,7 +23,7 @@ Manvi Mart
 
 <p class="text-secondary">
 
-Curated product discovery for Indian shoppers. Compare products and buy through trusted marketplaces.
+Affordable clothing picks from Manvi Mart India. Discover products here and shop marketplace links as they go live.
 
 </p>
 
@@ -150,7 +150,7 @@ Email: {{ store_email }}
 <div class="d-flex gap-3">
 
 <a
-href="https://www.instagram.com/manvimart/"
+href="https://www.instagram.com/manvimartindia?igsh=MWdlbmE5bmMwcXhnMQ%3D%3D&utm_source=qr"
 target="_blank"
 rel="noopener noreferrer"
 class="social-icon">
@@ -162,7 +162,7 @@ alt="Instagram">
 </a>
 
 <a
-href="https://www.facebook.com/profile.php?id=61586044196779"
+href="https://www.facebook.com/manvimartindia"
 target="_blank"
 rel="noopener noreferrer"
 class="social-icon">
@@ -174,9 +174,21 @@ alt="Facebook">
 </a>
 
 <a
-href="{{ url_for('home') }}"
+href="https://pin.it/5JTke5o48"
+target="_blank"
+rel="noopener noreferrer"
+class="social-icon">
+
+<img
+src="{{ url_for('static', filename='assets/img/pinterest.svg') }}"
+alt="Pinterest">
+
+</a>
+
+<a
+href="{{ url_for('products_page') }}"
 class="social-icon"
-title="Flipkart link will be updated soon">
+title="Flipkart store coming soon">
 
 <img
 src="{{ url_for('static', filename='assets/img/flipkart.svg') }}"
@@ -185,9 +197,9 @@ alt="Flipkart">
 </a>
 
 <a
-href="{{ url_for('home') }}"
+href="{{ url_for('products_page') }}"
 class="social-icon"
-title="Amazon link will be updated soon">
+title="Amazon store coming soon">
 
 <img
 src="{{ url_for('static', filename='assets/img/amazon.svg') }}"
@@ -196,9 +208,9 @@ alt="Amazon">
 </a>
 
 <a
-href="{{ url_for('home') }}"
+href="{{ url_for('products_page') }}"
 class="social-icon"
-title="Meesho link will be updated soon">
+title="View Manvi Mart products">
 
 <img
 src="{{ url_for('static', filename='assets/img/meesho.svg') }}"

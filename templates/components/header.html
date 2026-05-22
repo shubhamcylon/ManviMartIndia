@@ -9,7 +9,7 @@
             <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home') }}">
 
                 <img
-                        src="{{ url_for('static', filename='assets/img/manvi-mart-logo.png') }}"
+                        src="{{ url_for('static', filename='assets/img/brand/manvi-mart-logo-transparent.png') }}"
                         alt="ManviMart Logo"
                         class="site-logo site-logo-header me-2">
 
@@ -54,27 +54,16 @@
                                     <div class="category-menu-title">Men Fashion</div>
                                     <a class="dropdown-item" href="{{ url_for('category_page', slug='men') }}">All Men</a>
                                     <a class="dropdown-item" href="{{ url_for('category_page', slug='men-tshirt') }}">T-shirt</a>
-                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='men-lower') }}">Lower</a>
-                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='men-trouser') }}">Trouser</a>
+                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='men-oversize-tshirt') }}">Oversize T-shirt</a>
                                     <a class="dropdown-item" href="{{ url_for('category_page', slug='men-new-arrival') }}">New Arrival</a>
                                 </div>
 
                                 <div class="category-menu-group">
                                     <div class="category-menu-title">Women Fashion</div>
                                     <a class="dropdown-item" href="{{ url_for('category_page', slug='women') }}">All Women</a>
-                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='women-suit') }}">Suit</a>
-                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='women-kurti') }}">Kurti</a>
-                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='women-kurta') }}">Kurta</a>
-                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='women-lower') }}">Lower</a>
-                                </div>
-
-                                <div class="category-menu-group">
-                                    <div class="category-menu-title">Kids</div>
-                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='kids') }}">All Kids</a>
-                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='kids-tshirt') }}">T-shirt</a>
-                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='kids-lower') }}">Lower</a>
-                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='kids-clothes') }}">Kids Clothes</a>
-                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='kids-new-arrival') }}">New Arrival</a>
+                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='women-coord-set') }}">Co-ord Set</a>
+                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='women-top') }}">Female Top</a>
+                                    <a class="dropdown-item" href="{{ url_for('category_page', slug='women-new-arrival') }}">New Arrival</a>
                                 </div>
 
                                 <div class="category-menu-group">
