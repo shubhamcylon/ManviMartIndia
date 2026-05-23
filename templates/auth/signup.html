@@ -13,6 +13,9 @@
             </h4>
 
             <form method="POST">
+                {% if request.args.get("next") %}
+                <input type="hidden" name="next" value="{{ request.args.get('next') }}">
+                {% endif %}
 
                 <div class="form-floating mb-3">
 

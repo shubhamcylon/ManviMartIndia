@@ -13,6 +13,9 @@
             </h4>
 
             <form method="POST">
+                {% if request.args.get("next") %}
+                <input type="hidden" name="next" value="{{ request.args.get('next') }}">
+                {% endif %}
 
                 <input
                         type="text"

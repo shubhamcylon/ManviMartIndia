@@ -11,6 +11,8 @@
 
             <div class="d-flex align-items-center gap-3 order-3 order-lg-3">
                 <a class="header-action-link" href="{{ url_for('products_page') }}">SHOP</a>
+                <a class="header-action-link" href="{{ url_for('cart_page') }}">BAG ({{ cart_count }})</a>
+                <a class="header-action-link" href="{{ url_for('track_order') }}">TRACK</a>
                 {% if current_user %}
                     <div class="dropdown">
                         <a href="#" class="header-user-chip" data-bs-toggle="dropdown" aria-label="Open account menu">
@@ -22,6 +24,8 @@
                                 <span class="text-muted">{{ current_user.email }}</span>
                             </li>
                             <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('account') }}">My Account</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('track_order') }}">Track Order</a></li>
                             <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
                         </ul>
                     </div>

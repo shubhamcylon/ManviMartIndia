@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block title %}My Account | Manvi Mart India{% endblock %}
+{% block meta_description %}Manage your Manvi Mart profile, order history, wishlist and delivery addresses.{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="mb-4">
+            <p class="category-kicker mb-2">Customer Account</p>
+            <h1 class="fw-bold mb-2">My Account</h1>
+            <p class="text-muted mb-0">Track orders, manage addresses and view wishlist products.</p>
+        </div>
+
+        <div class="row g-4 align-items-start mb-4">
+            <div class="col-lg-5">
+                <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
+                    <h5 class="fw-bold mb-3">Profile</h5>
+                    <div class="small text-muted">Name</div>
+                    <div class="fw-semibold mb-2">{{ account_user.name }}</div>
+                    <div class="small text-muted">Email</div>
+                    <div class="fw-semibold mb-2">{{ account_user.email }}</div>
+                    <div class="small text-muted">Phone</div>
+                    <div class="fw-semibold">{{ account_user.phone or "Not added" }}</div>
+                </div>
+
+                <div class="bg-white rounded-3 shadow-sm p-4">
+                    <h5 class="fw-bold mb-3">Saved Addresses</h5>
+                    {% if addresses %}
+                    <div class="mb-3">
+                        {% for address in addresses %}
+                        <div class="border rounded-3 p-3 mb-2">
+                            <div class="d-flex justify-content-between align-items-start gap-2">
+                                <div>
+                                    <div class="fw-semibold">
+                                        {{ address.label }}
+                                        {% if address.is_default %}
+                                        <span class="badge text-bg-dark">Default</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="small text-muted">{{ address.recipient_name }} | {{ address.phone }}</div>
+                                    <div class="small text-muted">
+                                        {{ address.address_line }}, {{ address.city }}, {{ address.state }} - {{ address.pincode }}, {{ address.country }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2 mt-2">
+                                {% if not address.is_default %}
+                                <form method="POST" action="{{ url_for('set_default_address', address_id=address.id) }}">
+                                    <button class="btn btn-sm btn-outline-dark" type="submit">Make Default</button>
+                                </form>
+                                {% endif %}
+                                <form method="POST" action="{{ url_for('delete_account_address', address_id=address.id) }}">
+                                    <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info small">No saved addresses yet.</div>
+                    {% endif %}
+
+                    <h6 class="fw-bold mt-4 mb-3">Add New Address</h6>
+                    <form method="POST" action="{{ url_for('add_account_address') }}">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Save As</label>
+                                <input type="text" class="form-control" name="label" placeholder="Home / Work">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Recipient Name</label>
+                                <input type="text" class="form-control" name="recipient_name" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" class="form-control" name="phone" pattern="[0-9]{10,15}" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" name="address_line" rows="2" required></textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">City</label>
+                                <input type="text" class="form-control" name="city" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">State</label>
+                                <select class="form-select" name="state" required>
+                                    <option value="">Select state</option>
+                                    {% for state, code in indian_states.items() %}
+                                    <option value="{{ state }}">{{ state }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Pincode</label>
+                                <input type="text" class="form-control" name="pincode" pattern="[0-9]{6}" maxlength="6" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Country</label>
+                                <input type="text" class="form-control" name="country" value="India" readonly>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="on" name="is_default" id="accountDefaultAddress">
+                                    <label class="form-check-label" for="accountDefaultAddress">
+                                        Make this default address
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-dark w-100" type="submit">Save Address</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="bg-white rounded-3 shadow-sm p-4">
+                    <h5 class="fw-bold mb-3">Order History</h5>
+                    {% if orders %}
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Tracking ID</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <td>
+                                        <div class="fw-semibold">{{ order.tracking_id }}</div>
+                                        <div class="small text-muted">{{ payment_methods.get(order.payment_method, order.payment_method) }}</div>
+                                    </td>
+                                    <td class="small">{{ order.created_at.strftime("%d %b %Y, %I:%M %p") if order.created_at else "-" }}</td>
+                                    <td>₹{{ "%.2f"|format(order.total_amount) }}</td>
+                                    <td>{{ order.order_status }}</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-outline-dark" href="{{ url_for('invoice', invoice_no=order.invoice_no) }}">Invoice</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info small mb-0">
+                        No orders yet. Browse products and place your first order.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3 shadow-sm p-4">
+            <h5 class="fw-bold mb-3">Wishlist</h5>
+            {% if wishlist_products %}
+            <div class="product-grid">
+                {% for product in wishlist_products %}
+                {% include "components/product_card.html" %}
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-info small mb-0">
+                Your wishlist is empty. Tap the heart icon on any product to save it here.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

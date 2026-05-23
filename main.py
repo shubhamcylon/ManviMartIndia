@@ -1,5 +1,6 @@
 import os
 import re
+import json
 from datetime import datetime
 from decimal import Decimal, ROUND_HALF_UP
 from uuid import uuid4
@@ -10,7 +11,9 @@ from sqlalchemy import inspect, or_, text
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
-from urllib.parse import quote
+from urllib.error import HTTPError, URLError
+from urllib.parse import quote, urlencode
+from urllib.request import Request, urlopen
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
@@ -38,13 +41,20 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.environ.get("MAIL_USERNAME")
 app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSWORD")
-app.config['STORE_EMAIL'] = 'manvimart@outlook.com'
+app.config['STORE_EMAIL'] = os.environ.get("STORE_EMAIL") or 'manvimart@outlook.com'
 app.config['ONLINE_PAYMENT_ENABLED'] = False
-app.config['STORE_NAME'] = 'Manvi Mart India'
-app.config['STORE_GSTIN'] = 'GSTIN_NOT_ADDED'
-app.config['STORE_ADDRESS'] = 'Haridwar, Uttarakhand, India'
-app.config['STORE_STATE'] = 'Uttarakhand'
-app.config['STORE_STATE_CODE'] = '05'
+app.config['STORE_NAME'] = os.environ.get("STORE_NAME") or 'Manvi Mart India'
+app.config['STORE_GSTIN'] = os.environ.get("STORE_GSTIN") or 'GSTIN_NOT_ADDED'
+app.config['STORE_ADDRESS'] = os.environ.get("STORE_ADDRESS") or 'Haridwar, Uttarakhand, India'
+app.config['STORE_STATE'] = os.environ.get("STORE_STATE") or 'Uttarakhand'
+app.config['STORE_STATE_CODE'] = os.environ.get("STORE_STATE_CODE") or '05'
+app.config['STORE_WHATSAPP_NUMBER'] = os.environ.get("STORE_WHATSAPP_NUMBER", "")
+app.config['ORDER_ALERT_TELEGRAM_BOT_TOKEN'] = os.environ.get("ORDER_ALERT_TELEGRAM_BOT_TOKEN", "")
+app.config['ORDER_ALERT_TELEGRAM_CHAT_ID'] = os.environ.get("ORDER_ALERT_TELEGRAM_CHAT_ID", "")
+app.config['ORDER_ALERT_WHATSAPP_PHONE'] = os.environ.get("ORDER_ALERT_WHATSAPP_PHONE", "")
+app.config['ORDER_ALERT_WHATSAPP_APIKEY'] = os.environ.get("ORDER_ALERT_WHATSAPP_APIKEY", "")
+app.config['GOOGLE_SHEET_WEBHOOK_URL'] = os.environ.get("GOOGLE_SHEET_WEBHOOK_URL", "")
+app.config['GOOGLE_SHEET_WEBHOOK_TOKEN'] = os.environ.get("GOOGLE_SHEET_WEBHOOK_TOKEN", "")
 
 
 db = SQLAlchemy(app)
@@ -59,7 +69,7 @@ products = [
     {
         "id": 1,
         "name": "Draw Graphic T-shirt",
-        "price": 899,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
         "category": "tshirt",
@@ -75,10 +85,10 @@ products = [
     {
         "id": 2,
         "name": "Confused Black T-shirt",
-        "price": 999,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
-        "category": "oversize-tshirt",
+        "category": "tshirt",
         "description": "Black statement graphic t-shirt designed for everyday street styling.",
         "image": "assets/img/products/men-confused-black-tshirt-front.jpg",
         "gallery": [
@@ -91,7 +101,7 @@ products = [
     {
         "id": 3,
         "name": "Burgundy Floral Top",
-        "price": 1499,
+        "price": 399,
         "hsn": "6206",
         "gst_rate": 5,
         "category": "female-top",
@@ -107,7 +117,7 @@ products = [
     {
         "id": 4,
         "name": "Orange Floral Top",
-        "price": 1499,
+        "price": 399,
         "hsn": "6206",
         "gst_rate": 5,
         "category": "female-top",
@@ -123,7 +133,7 @@ products = [
     {
         "id": 5,
         "name": "Pink Floral Top",
-        "price": 1499,
+        "price": 399,
         "hsn": "6206",
         "gst_rate": 5,
         "category": "female-top",
@@ -139,7 +149,7 @@ products = [
     {
         "id": 6,
         "name": "Breeze Beige T-shirt",
-        "price": 899,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
         "category": "tshirt",
@@ -156,7 +166,7 @@ products = [
     {
         "id": 7,
         "name": "Future Yellow T-shirt",
-        "price": 899,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
         "category": "tshirt",
@@ -173,7 +183,7 @@ products = [
     {
         "id": 8,
         "name": "Strong Yellow T-shirt",
-        "price": 899,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
         "category": "tshirt",
@@ -190,7 +200,7 @@ products = [
     {
         "id": 9,
         "name": "Think Coral T-shirt",
-        "price": 949,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
         "category": "tshirt",
@@ -207,7 +217,7 @@ products = [
     {
         "id": 10,
         "name": "Vibes Blue T-shirt",
-        "price": 949,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
         "category": "tshirt",
@@ -224,7 +234,7 @@ products = [
     {
         "id": 11,
         "name": "Vibes Grey T-shirt",
-        "price": 949,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
         "category": "tshirt",
@@ -241,7 +251,7 @@ products = [
     {
         "id": 12,
         "name": "Expand Green T-shirt",
-        "price": 949,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
         "category": "tshirt",
@@ -258,7 +268,7 @@ products = [
     {
         "id": 13,
         "name": "Destiny Green T-shirt",
-        "price": 949,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
         "category": "tshirt",
@@ -275,7 +285,7 @@ products = [
     {
         "id": 14,
         "name": "Embrace Black T-shirt",
-        "price": 949,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
         "category": "tshirt",
@@ -292,7 +302,7 @@ products = [
     {
         "id": 15,
         "name": "Adventure Coral T-shirt",
-        "price": 949,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
         "category": "tshirt",
@@ -309,7 +319,7 @@ products = [
     {
         "id": 16,
         "name": "White Floral Co-ord Set",
-        "price": 1999,
+        "price": 399,
         "hsn": "6204",
         "gst_rate": 5,
         "category": "coord-set",
@@ -327,7 +337,7 @@ products = [
     {
         "id": 17,
         "name": "Aqua Floral Co-ord Set",
-        "price": 1999,
+        "price": 399,
         "hsn": "6204",
         "gst_rate": 5,
         "category": "coord-set",
@@ -344,7 +354,7 @@ products = [
     {
         "id": 18,
         "name": "Navy Floral Co-ord Set",
-        "price": 1999,
+        "price": 399,
         "hsn": "6204",
         "gst_rate": 5,
         "category": "coord-set",
@@ -361,7 +371,7 @@ products = [
     {
         "id": 19,
         "name": "Magenta Leaf Top",
-        "price": 1599,
+        "price": 299,
         "hsn": "6206",
         "gst_rate": 5,
         "category": "female-top",
@@ -378,7 +388,7 @@ products = [
     {
         "id": 20,
         "name": "Olive Leaf Top",
-        "price": 1599,
+        "price": 299,
         "hsn": "6206",
         "gst_rate": 5,
         "category": "female-top",
@@ -395,7 +405,7 @@ products = [
     {
         "id": 21,
         "name": "Teal Leaf Top",
-        "price": 1599,
+        "price": 299,
         "hsn": "6206",
         "gst_rate": 5,
         "category": "female-top",
@@ -412,7 +422,7 @@ products = [
     {
         "id": 22,
         "name": "Gysber Blue T-shirt",
-        "price": 949,
+        "price": 299,
         "hsn": "6109",
         "gst_rate": 5,
         "category": "tshirt",
@@ -611,6 +621,25 @@ def is_valid_password(password):
     return len(password or "") >= 8
 
 
+def get_user_addresses(user_id):
+    return UserAddress.query.filter_by(user_id=user_id).order_by(
+        UserAddress.is_default.desc(),
+        UserAddress.created_at.desc()
+    ).all()
+
+
+def validate_shipping_details(shipping_address, shipping_city, shipping_state, shipping_pincode, shipping_country):
+    if not shipping_address or not shipping_city or not shipping_state or not shipping_pincode:
+        return "Please fill all delivery address details."
+    if shipping_state not in INDIAN_STATES:
+        return "Please select a valid Indian state."
+    if not re.fullmatch(r"\d{6}", shipping_pincode):
+        return "Please enter a valid 6 digit Indian pincode."
+    if (shipping_country or "").strip().lower() != "india":
+        return "Orders are available only within India."
+    return None
+
+
 def safe_next_url(default_endpoint="home"):
     next_url = request.args.get("next") or request.form.get("next")
     if next_url and next_url.startswith("/") and not next_url.startswith("//"):
@@ -700,6 +729,197 @@ def build_cart_totals(cart, shipping_state=None):
     }
 
 
+def format_inr(value):
+    return f"{money(value):.2f}"
+
+
+def normalize_whatsapp_number(phone):
+    digits = normalize_phone(phone)
+    if digits.startswith("00"):
+        digits = digits[2:]
+    if len(digits) == 10:
+        digits = f"91{digits}"
+    return digits
+
+
+def build_order_alert_text(order):
+    lines = [
+        "New order placed on Manvi Mart",
+        f"Tracking ID: {order.tracking_id}",
+        f"Invoice: {order.invoice_no}",
+        f"Customer: {order.customer_name}",
+        f"Phone: {order.customer_phone}",
+        f"Email: {order.customer_email}",
+        f"Payment: {PAYMENT_METHODS.get(order.payment_method, order.payment_method)}",
+        "Items:",
+    ]
+
+    for item in order.items:
+        lines.append(
+            f"- {item.product_name} x {item.quantity} = Rs. {format_inr(item.line_total)}"
+        )
+
+    lines.extend([
+        f"Total: Rs. {format_inr(order.total_amount)}",
+        (
+            "Address: "
+            f"{order.shipping_address}, {order.shipping_city}, {order.shipping_state} - "
+            f"{order.shipping_pincode}, {order.shipping_country}"
+        ),
+    ])
+    return "\n".join(lines)
+
+
+def build_google_sheet_order_payload(order):
+    return {
+        "tracking_id": order.tracking_id,
+        "invoice_no": order.invoice_no,
+        "created_at": order.created_at.isoformat() if order.created_at else "",
+        "customer_name": order.customer_name,
+        "customer_email": order.customer_email,
+        "customer_phone": order.customer_phone,
+        "payment_method": PAYMENT_METHODS.get(order.payment_method, order.payment_method),
+        "payment_status": order.payment_status,
+        "order_status": order.order_status,
+        "shipping_address": order.shipping_address,
+        "shipping_city": order.shipping_city,
+        "shipping_state": order.shipping_state,
+        "shipping_pincode": order.shipping_pincode,
+        "shipping_country": order.shipping_country,
+        "subtotal": format_inr(order.subtotal_amount),
+        "taxable_amount": format_inr(order.taxable_amount),
+        "cgst": format_inr(order.cgst_amount),
+        "sgst": format_inr(order.sgst_amount),
+        "igst": format_inr(order.igst_amount),
+        "gst_total": format_inr(order.gst_amount),
+        "grand_total": format_inr(order.total_amount),
+        "items": [
+            {
+                "product_id": item.product_id,
+                "name": item.product_name,
+                "hsn": item.hsn_code,
+                "gst_rate": format_inr(item.gst_rate),
+                "quantity": item.quantity,
+                "price": format_inr(item.price),
+                "line_total": format_inr(item.line_total),
+            }
+            for item in order.items
+        ],
+    }
+
+
+def send_google_sheet_order_alert(order):
+    webhook_url = app.config.get("GOOGLE_SHEET_WEBHOOK_URL", "").strip()
+    webhook_token = app.config.get("GOOGLE_SHEET_WEBHOOK_TOKEN", "").strip()
+    if not webhook_url:
+        return False
+
+    if webhook_token:
+        separator = "&" if "?" in webhook_url else "?"
+        webhook_url = f"{webhook_url}{separator}{urlencode({'token': webhook_token})}"
+
+    payload = json.dumps(build_google_sheet_order_payload(order)).encode("utf-8")
+    request_obj = Request(
+        webhook_url,
+        data=payload,
+        headers={"Content-Type": "application/json"},
+        method="POST"
+    )
+    try:
+        with urlopen(request_obj, timeout=10) as response:
+            return 200 <= getattr(response, "status", 200) < 300
+    except (HTTPError, URLError):
+        app.logger.exception("Google Sheet webhook failed for order %s", order.tracking_id)
+    except Exception:
+        app.logger.exception("Unexpected Google Sheet webhook error for %s", order.tracking_id)
+    return False
+
+
+def send_store_order_email(order, alert_text):
+    store_email = app.config.get("STORE_EMAIL")
+    mail_username = app.config.get("MAIL_USERNAME")
+    mail_password = app.config.get("MAIL_PASSWORD")
+    if not store_email or not mail_username or not mail_password:
+        return False
+
+    try:
+        msg = Message(
+            subject=f"New Order {order.tracking_id} | Rs. {format_inr(order.total_amount)}",
+            sender=mail_username,
+            recipients=[store_email],
+            body=alert_text,
+        )
+        mail.send(msg)
+        return True
+    except Exception:
+        app.logger.exception("Order email notification failed for %s", order.tracking_id)
+        return False
+
+
+def send_telegram_order_alert(alert_text):
+    bot_token = app.config.get("ORDER_ALERT_TELEGRAM_BOT_TOKEN")
+    chat_id = app.config.get("ORDER_ALERT_TELEGRAM_CHAT_ID")
+    if not bot_token or not chat_id:
+        return False
+
+    endpoint = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    payload = urlencode({"chat_id": chat_id, "text": alert_text})
+    request_obj = Request(
+        endpoint,
+        data=payload.encode("utf-8"),
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+        method="POST",
+    )
+
+    try:
+        with urlopen(request_obj, timeout=10) as response:
+            return 200 <= getattr(response, "status", 200) < 300
+    except (HTTPError, URLError):
+        app.logger.exception("Telegram order notification failed.")
+    except Exception:
+        app.logger.exception("Unexpected Telegram notification error.")
+    return False
+
+
+def send_whatsapp_order_alert(alert_text):
+    phone = normalize_whatsapp_number(app.config.get("ORDER_ALERT_WHATSAPP_PHONE", ""))
+    api_key = app.config.get("ORDER_ALERT_WHATSAPP_APIKEY")
+    if not phone or not api_key:
+        return False
+
+    query = urlencode({
+        "phone": phone,
+        "text": alert_text,
+        "apikey": api_key,
+    })
+    endpoint = f"https://api.callmebot.com/whatsapp.php?{query}"
+
+    try:
+        with urlopen(endpoint, timeout=10) as response:
+            return 200 <= getattr(response, "status", 200) < 300
+    except (HTTPError, URLError):
+        app.logger.exception("WhatsApp order notification failed.")
+    except Exception:
+        app.logger.exception("Unexpected WhatsApp notification error.")
+    return False
+
+
+def send_order_alerts(order):
+    alert_text = build_order_alert_text(order)
+    results = {
+        "email": send_store_order_email(order, alert_text),
+        "telegram": send_telegram_order_alert(alert_text),
+        "whatsapp": send_whatsapp_order_alert(alert_text),
+        "google_sheet": send_google_sheet_order_alert(order),
+    }
+    if not any(results.values()):
+        app.logger.warning(
+            "Order %s placed but no notification channel is configured.",
+            order.tracking_id
+        )
+    return results
+
+
 # ======================
 # User Model
 # ======================
@@ -711,6 +931,7 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
     orders = db.relationship("Order", backref="user", lazy=True)
     wishlist_items = db.relationship("WishlistItem", backref="user", lazy=True, cascade="all, delete-orphan")
+    addresses = db.relationship("UserAddress", backref="user", lazy=True, cascade="all, delete-orphan")
 
 
 class Order(db.Model):
@@ -767,6 +988,23 @@ class WishlistItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     product_id = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+
+class UserAddress(db.Model):
+    __tablename__ = "user_addresses"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    label = db.Column(db.String(50), nullable=False, default="Home")
+    recipient_name = db.Column(db.String(100), nullable=False)
+    phone = db.Column(db.String(20), nullable=False)
+    address_line = db.Column(db.Text, nullable=False)
+    city = db.Column(db.String(100), nullable=False)
+    state = db.Column(db.String(80), nullable=False)
+    pincode = db.Column(db.String(10), nullable=False)
+    country = db.Column(db.String(80), nullable=False, default="India")
+    is_default = db.Column(db.Boolean, nullable=False, default=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 
@@ -863,6 +1101,7 @@ def cart_counter():
 def store_settings():
     return dict(
         store_email=app.config['STORE_EMAIL'],
+        store_whatsapp_number=app.config['STORE_WHATSAPP_NUMBER'],
         online_payment_enabled=app.config['ONLINE_PAYMENT_ENABLED'],
         store_name=app.config['STORE_NAME'],
         store_gstin=app.config['STORE_GSTIN'],
@@ -1010,8 +1249,32 @@ def add_to_cart(pid):
     if not product:
         flash("Product not found", "danger")
         return redirect(url_for("products_page"))
-    flash("Please use the Flipkart, Amazon or Meesho buttons to purchase.", "info")
-    return redirect(url_for("product_detail", pid=product["id"]))
+
+    qty_raw = request.form.get("qty", "1")
+    try:
+        qty = int(qty_raw)
+    except (TypeError, ValueError):
+        qty = 1
+    qty = max(1, min(10, qty))
+
+    cart = session.get("cart", {})
+    pid_key = str(pid)
+    if pid_key in cart:
+        cart[pid_key]["qty"] = min(10, int(cart[pid_key].get("qty", 1)) + qty)
+    else:
+        cart[pid_key] = {
+            "name": product["name"],
+            "price": float(product["price"]),
+            "qty": qty,
+            "hsn": product.get("hsn", ""),
+            "gst_rate": float(product.get("gst_rate", 5)),
+            "image": product.get("image", ""),
+        }
+
+    session["cart"] = cart
+    session.modified = True
+    flash(f"{product['name']} added to cart.", "success")
+    return redirect(request.form.get("next") or request.referrer or url_for("cart_page"))
 
 
 @app.route("/buy-now/<int:pid>", methods=["POST"])
@@ -1020,8 +1283,20 @@ def buy_now(pid):
     if not product:
         flash("Product not found", "danger")
         return redirect(url_for("products_page"))
-    flash("Choose your preferred marketplace to complete the purchase.", "info")
-    return redirect(url_for("product_detail", pid=product["id"]))
+
+    cart = session.get("cart", {})
+    pid_key = str(pid)
+    cart[pid_key] = {
+        "name": product["name"],
+        "price": float(product["price"]),
+        "qty": 1,
+        "hsn": product.get("hsn", ""),
+        "gst_rate": float(product.get("gst_rate", 5)),
+        "image": product.get("image", ""),
+    }
+    session["cart"] = cart
+    session.modified = True
+    return redirect(url_for("checkout"))
 
 
 @app.route("/wishlist-toggle/<int:pid>", methods=["POST"])
@@ -1051,18 +1326,150 @@ def wishlist_toggle(pid):
     return redirect(request.referrer or url_for("products_page"))
 
 
-@app.route("/cart")
-def cart_page():
-    flash("Cart checkout is disabled. Please buy through the marketplace buttons.", "info")
-    return redirect(url_for("products_page"))
-
-
-@app.route("/remove-cart/<pid>")
-def remove_cart(pid):
+@app.route("/account")
+def account():
     login_redirect = require_login()
     if login_redirect:
         return login_redirect
 
+    user_id = session["user_id"]
+    user = db.session.get(User, user_id)
+    orders = Order.query.filter_by(user_id=user_id).order_by(Order.created_at.desc()).all()
+    addresses = get_user_addresses(user_id)
+
+    wishlist_records = WishlistItem.query.filter_by(user_id=user_id).order_by(WishlistItem.created_at.desc()).all()
+    wishlist_products = []
+    seen_product_ids = set()
+    for record in wishlist_records:
+        product = get_product(record.product_id)
+        if product and product["id"] not in seen_product_ids:
+            wishlist_products.append(product)
+            seen_product_ids.add(product["id"])
+
+    return render_template(
+        "account.html",
+        account_user=user,
+        orders=orders,
+        addresses=addresses,
+        wishlist_products=wishlist_products,
+        payment_methods=PAYMENT_METHODS,
+        indian_states=INDIAN_STATES,
+    )
+
+
+@app.route("/account/address/add", methods=["POST"])
+def add_account_address():
+    login_redirect = require_login()
+    if login_redirect:
+        return login_redirect
+
+    user_id = session["user_id"]
+    label = request.form.get("label", "").strip() or "Home"
+    recipient_name = request.form.get("recipient_name", "").strip()
+    phone = normalize_phone(request.form.get("phone", ""))
+    address_line = request.form.get("address_line", "").strip()
+    city = request.form.get("city", "").strip()
+    state = request.form.get("state", "").strip()
+    pincode = request.form.get("pincode", "").strip()
+    country = request.form.get("country", "India").strip() or "India"
+    mark_default = request.form.get("is_default") == "on"
+
+    if not recipient_name:
+        flash("Please enter recipient name for address.", "danger")
+        return redirect(url_for("account"))
+
+    if not is_valid_phone(phone):
+        flash("Please enter a valid mobile number for address.", "danger")
+        return redirect(url_for("account"))
+
+    address_error = validate_shipping_details(address_line, city, state, pincode, country)
+    if address_error:
+        flash(address_error, "danger")
+        return redirect(url_for("account"))
+
+    has_existing_address = UserAddress.query.filter_by(user_id=user_id).first() is not None
+    if not has_existing_address:
+        mark_default = True
+
+    if mark_default:
+        UserAddress.query.filter_by(user_id=user_id).update({"is_default": False})
+
+    new_address = UserAddress(
+        user_id=user_id,
+        label=label[:50],
+        recipient_name=recipient_name[:100],
+        phone=phone[:20],
+        address_line=address_line,
+        city=city[:100],
+        state=state[:80],
+        pincode=pincode[:10],
+        country="India",
+        is_default=mark_default,
+    )
+    db.session.add(new_address)
+    db.session.commit()
+    flash("Address saved successfully.", "success")
+    return redirect(url_for("account"))
+
+
+@app.route("/account/address/default/<int:address_id>", methods=["POST"])
+def set_default_address(address_id):
+    login_redirect = require_login()
+    if login_redirect:
+        return login_redirect
+
+    user_id = session["user_id"]
+    address = UserAddress.query.filter_by(id=address_id, user_id=user_id).first()
+    if not address:
+        flash("Address not found.", "danger")
+        return redirect(url_for("account"))
+
+    UserAddress.query.filter_by(user_id=user_id).update({"is_default": False})
+    address.is_default = True
+    db.session.commit()
+    flash("Default address updated.", "success")
+    return redirect(url_for("account"))
+
+
+@app.route("/account/address/delete/<int:address_id>", methods=["POST"])
+def delete_account_address(address_id):
+    login_redirect = require_login()
+    if login_redirect:
+        return login_redirect
+
+    user_id = session["user_id"]
+    address = UserAddress.query.filter_by(id=address_id, user_id=user_id).first()
+    if not address:
+        flash("Address not found.", "danger")
+        return redirect(url_for("account"))
+
+    was_default = address.is_default
+    db.session.delete(address)
+    db.session.commit()
+
+    if was_default:
+        replacement = UserAddress.query.filter_by(user_id=user_id).order_by(UserAddress.created_at.desc()).first()
+        if replacement:
+            replacement.is_default = True
+            db.session.commit()
+
+    flash("Address removed.", "info")
+    return redirect(url_for("account"))
+
+
+@app.route("/cart")
+def cart_page():
+    cart = session.get("cart", {})
+    total = money(0)
+    totals = None
+    if cart:
+        totals = build_cart_totals(cart)
+        total = totals["grand_total"]
+    return render_template("cart.html", cart=cart, total=total, totals=totals)
+
+
+@app.route("/remove-cart/<pid>")
+def remove_cart(pid):
     cart = session.get("cart", {})
     if pid in cart:
         del cart[pid]
@@ -1073,13 +1480,17 @@ def remove_cart(pid):
 
 @app.route("/checkout", methods=["GET", "POST"])
 def checkout():
-    flash("Checkout is handled by Flipkart, Amazon or Meesho for now.", "info")
-    return redirect(url_for("products_page"))
-
     cart = session.get("cart", {})
     if not cart:
         flash("Your cart is empty", "info")
         return redirect(url_for("products_page"))
+
+    current_user = None
+    user_addresses = []
+    if "user_id" in session:
+        current_user = db.session.get(User, session["user_id"])
+        if current_user:
+            user_addresses = get_user_addresses(current_user.id)
 
     totals = build_cart_totals(cart)
     total = totals["grand_total"]
@@ -1098,27 +1509,18 @@ def checkout():
         customer_name = request.form.get("customer_name", "").strip()
         customer_email = request.form.get("customer_email", "").strip().lower()
         customer_phone = normalize_phone(request.form.get("customer_phone", ""))
-        shipping_address = request.form.get("shipping_address", "").strip()
-        shipping_city = request.form.get("shipping_city", "").strip()
-        shipping_state = request.form.get("shipping_state", "").strip()
-        shipping_pincode = request.form.get("shipping_pincode", "").strip()
-        shipping_country = request.form.get("shipping_country", "India").strip()
+        selected_address_id = request.form.get("selected_address_id", "").strip()
+        selected_address = None
         payment_method = request.form.get("payment_method", "").strip()
 
-        if not customer_name or not customer_email or not customer_phone or not shipping_address or not shipping_city or not shipping_state or not shipping_pincode:
-            flash("Please fill all order details.", "danger")
-            return redirect(url_for("checkout"))
+        if current_user:
+            customer_name = customer_name or current_user.name
+            customer_email = customer_email or current_user.email
+            if not customer_phone and current_user.phone:
+                customer_phone = normalize_phone(current_user.phone)
 
-        if shipping_state not in INDIAN_STATES:
-            flash("Please select a valid Indian state.", "danger")
-            return redirect(url_for("checkout"))
-
-        if not re.fullmatch(r"\d{6}", shipping_pincode):
-            flash("Please enter a valid 6 digit Indian pincode.", "danger")
-            return redirect(url_for("checkout"))
-
-        if shipping_country.lower() != "india":
-            flash("Orders are available only within India.", "danger")
+        if not customer_name or not customer_email or not customer_phone:
+            flash("Please fill all contact details.", "danger")
             return redirect(url_for("checkout"))
 
         if payment_method not in PAYMENT_METHODS:
@@ -1127,6 +1529,45 @@ def checkout():
 
         if not is_valid_phone(customer_phone):
             flash("Please enter a valid mobile number.", "danger")
+            return redirect(url_for("checkout"))
+
+        if current_user and selected_address_id and selected_address_id != "new":
+            try:
+                selected_address_pk = int(selected_address_id)
+            except (TypeError, ValueError):
+                flash("Please select a valid saved address.", "danger")
+                return redirect(url_for("checkout"))
+
+            selected_address = UserAddress.query.filter_by(
+                id=selected_address_pk,
+                user_id=current_user.id
+            ).first()
+            if not selected_address:
+                flash("Selected address was not found.", "danger")
+                return redirect(url_for("checkout"))
+
+        if selected_address:
+            shipping_address = selected_address.address_line
+            shipping_city = selected_address.city
+            shipping_state = selected_address.state
+            shipping_pincode = selected_address.pincode
+            shipping_country = selected_address.country
+        else:
+            shipping_address = request.form.get("shipping_address", "").strip()
+            shipping_city = request.form.get("shipping_city", "").strip()
+            shipping_state = request.form.get("shipping_state", "").strip()
+            shipping_pincode = request.form.get("shipping_pincode", "").strip()
+            shipping_country = request.form.get("shipping_country", "India").strip()
+
+        shipping_error = validate_shipping_details(
+            shipping_address=shipping_address,
+            shipping_city=shipping_city,
+            shipping_state=shipping_state,
+            shipping_pincode=shipping_pincode,
+            shipping_country=shipping_country
+        )
+        if shipping_error:
+            flash(shipping_error, "danger")
             return redirect(url_for("checkout"))
 
         totals = build_cart_totals(cart, shipping_state)
@@ -1172,8 +1613,31 @@ def checkout():
                 line_total=item["line_total"]
             ))
 
+        if current_user and not selected_address and request.form.get("save_new_address") == "on":
+            make_default = request.form.get("set_default_address") == "on"
+            has_existing_address = UserAddress.query.filter_by(user_id=current_user.id).first() is not None
+            if not has_existing_address:
+                make_default = True
+            if make_default:
+                UserAddress.query.filter_by(user_id=current_user.id).update({"is_default": False})
+            new_address = UserAddress(
+                user_id=current_user.id,
+                label=(request.form.get("address_label", "").strip() or "Checkout")[:50],
+                recipient_name=customer_name[:100],
+                phone=customer_phone[:20],
+                address_line=shipping_address,
+                city=shipping_city[:100],
+                state=shipping_state[:80],
+                pincode=shipping_pincode[:10],
+                country="India",
+                is_default=make_default,
+            )
+            db.session.add(new_address)
+
         db.session.add(order)
         db.session.commit()
+
+        send_order_alerts(order)
 
         session["cart"] = {}
         allowed_orders = session.get("allowed_order_ids", [])
@@ -1181,10 +1645,6 @@ def checkout():
         session["allowed_order_ids"] = allowed_orders
         flash("Order placed successfully.", "success")
         return redirect(url_for("order_success", tracking_id=order.tracking_id))
-
-    current_user = None
-    if "user_id" in session:
-        current_user = db.session.get(User, session["user_id"])
 
     return render_template(
         "checkout.html",
@@ -1196,7 +1656,8 @@ def checkout():
         order_summary=order_summary,
         mail_subject=mail_subject,
         mail_body=mail_body,
-        current_user=current_user
+        current_user=current_user,
+        user_addresses=user_addresses
     )
 
 
@@ -1212,10 +1673,20 @@ def order_success(tracking_id):
         flash("Please login to view this order.", "warning")
         return redirect(url_for("login"))
 
+    whatsapp_link = None
+    store_whatsapp = normalize_whatsapp_number(app.config.get("STORE_WHATSAPP_NUMBER", ""))
+    if store_whatsapp:
+        message = quote(
+            f"Hi Manvi Mart, I placed an order.\nTracking ID: {order.tracking_id}\n"
+            f"Name: {order.customer_name}\nPhone: {order.customer_phone}"
+        )
+        whatsapp_link = f"https://wa.me/{store_whatsapp}?text={message}"
+
     return render_template(
         "order_success.html",
         order=order,
-        payment_methods=PAYMENT_METHODS
+        payment_methods=PAYMENT_METHODS,
+        whatsapp_link=whatsapp_link
     )
 
 

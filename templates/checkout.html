@@ -67,57 +67,120 @@
                     <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
                         <h5 class="fw-bold mb-3">Delivery Address</h5>
 
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <label class="form-label">Address</label>
-                                <textarea
-                                        name="shipping_address"
-                                        class="form-control"
-                                        rows="3"
-                                        placeholder="House no, street, area"
-                                        required></textarea>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label class="form-label">City</label>
+                        {% if current_user and user_addresses %}
+                        <div class="mb-4">
+                            <label class="form-label d-block">Choose Saved Address</label>
+                            {% for address in user_addresses %}
+                            <label class="border rounded-3 p-3 mb-2 w-100">
                                 <input
-                                        type="text"
-                                        name="shipping_city"
-                                        class="form-control"
-                                        required>
-                            </div>
+                                        type="radio"
+                                        name="selected_address_id"
+                                        value="{{ address.id }}"
+                                        data-state="{{ address.state }}"
+                                        {% if loop.first %}checked{% endif %}>
+                                <span class="ms-2 fw-semibold">
+                                    {{ address.label }}
+                                    {% if address.is_default %}<span class="badge text-bg-dark ms-2">Default</span>{% endif %}
+                                </span>
+                                <div class="small text-muted mt-2">
+                                    {{ address.recipient_name }} | {{ address.phone }}<br>
+                                    {{ address.address_line }}, {{ address.city }}, {{ address.state }} - {{ address.pincode }}, {{ address.country }}
+                                </div>
+                            </label>
+                            {% endfor %}
+                            <label class="border rounded-3 p-3 w-100">
+                                <input type="radio" name="selected_address_id" value="new" data-state="">
+                                <span class="ms-2 fw-semibold">Use a New Address</span>
+                            </label>
+                        </div>
+                        {% elif current_user %}
+                        <input type="hidden" name="selected_address_id" value="new">
+                        <div class="alert alert-info small mb-4">
+                            No saved address found. Add your delivery address below.
+                        </div>
+                        {% endif %}
 
-                            <div class="col-md-4">
-                                <label class="form-label">State</label>
-                                <select name="shipping_state" class="form-select" id="shippingState" required>
-                                    <option value="">Select state</option>
-                                    {% for state, code in indian_states.items() %}
-                                    <option value="{{ state }}" {% if state == store_state %}selected{% endif %}>
-                                        {{ state }}
-                                    </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                        <div id="newAddressFields">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label">Address</label>
+                                    <textarea
+                                            name="shipping_address"
+                                            class="form-control new-address-input"
+                                            rows="3"
+                                            placeholder="House no, street, area"
+                                            data-required="true"
+                                            required></textarea>
+                                </div>
 
-                            <div class="col-md-4">
-                                <label class="form-label">Pincode</label>
-                                <input
-                                        type="text"
-                                        name="shipping_pincode"
-                                        class="form-control"
-                                        pattern="[0-9]{6}"
-                                        maxlength="6"
-                                        required>
-                            </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">City</label>
+                                    <input
+                                            type="text"
+                                            name="shipping_city"
+                                            class="form-control new-address-input"
+                                            data-required="true"
+                                            required>
+                                </div>
 
-                            <div class="col-12">
-                                <label class="form-label">Country</label>
-                                <input
-                                        type="text"
-                                        name="shipping_country"
-                                        class="form-control"
-                                        value="India"
-                                        readonly>
+                                <div class="col-md-4">
+                                    <label class="form-label">State</label>
+                                    <select name="shipping_state" class="form-select new-address-input" id="shippingState" data-required="true" required>
+                                        <option value="">Select state</option>
+                                        {% for state, code in indian_states.items() %}
+                                        <option value="{{ state }}" {% if state == store_state %}selected{% endif %}>
+                                            {{ state }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label">Pincode</label>
+                                    <input
+                                            type="text"
+                                            name="shipping_pincode"
+                                            class="form-control new-address-input"
+                                            pattern="[0-9]{6}"
+                                            maxlength="6"
+                                            data-required="true"
+                                            required>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">Country</label>
+                                    <input
+                                            type="text"
+                                            name="shipping_country"
+                                            class="form-control new-address-input"
+                                            value="India"
+                                            readonly>
+                                </div>
+
+                                {% if current_user %}
+                                <div class="col-md-6">
+                                    <label class="form-label">Save As</label>
+                                    <input
+                                            type="text"
+                                            name="address_label"
+                                            class="form-control new-address-input"
+                                            placeholder="Home / Work">
+                                </div>
+                                <div class="col-md-6 d-flex align-items-end">
+                                    <div class="form-check me-4">
+                                        <input class="form-check-input new-address-input" type="checkbox" value="on" name="save_new_address" id="saveNewAddress" checked>
+                                        <label class="form-check-label" for="saveNewAddress">
+                                            Save this address
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input new-address-input" type="checkbox" value="on" name="set_default_address" id="setDefaultAddress">
+                                        <label class="form-check-label" for="setDefaultAddress">
+                                            Make default
+                                        </label>
+                                    </div>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -207,6 +270,9 @@
 </section>
 
 <script>
+const savedAddressRadios = document.querySelectorAll('input[name="selected_address_id"]');
+const newAddressFields = document.getElementById("newAddressFields");
+const newAddressInputs = document.querySelectorAll(".new-address-input");
 const shippingState = document.getElementById("shippingState");
 const cgstAmount = document.getElementById("cgstAmount");
 const sgstAmount = document.getElementById("sgstAmount");
@@ -218,12 +284,40 @@ function formatMoney(value){
     return "₹" + value.toFixed(2);
 }
 
-function updateGstSplit(){
-    if(!shippingState){
+function selectedShippingState(){
+    const selectedAddress = document.querySelector('input[name="selected_address_id"]:checked');
+    if (selectedAddress && selectedAddress.value !== "new") {
+        return selectedAddress.dataset.state || "";
+    }
+    if (shippingState) {
+        return shippingState.value;
+    }
+    return "";
+}
+
+function toggleNewAddressFields(){
+    if (!savedAddressRadios.length || !newAddressFields) {
+        updateGstSplit();
         return;
     }
 
-    if(shippingState.value === storeState){
+    const selectedAddress = document.querySelector('input[name="selected_address_id"]:checked');
+    const isNewAddress = !selectedAddress || selectedAddress.value === "new";
+    newAddressFields.style.display = isNewAddress ? "block" : "none";
+
+    newAddressInputs.forEach((input) => {
+        input.disabled = !isNewAddress;
+        if (input.dataset.required === "true") {
+            input.required = isNewAddress;
+        }
+    });
+    updateGstSplit();
+}
+
+function updateGstSplit(){
+    const shippingStateValue = selectedShippingState();
+
+    if(shippingStateValue && shippingStateValue === storeState){
         const halfGst = Math.round((totalGst / 2) * 100) / 100;
         cgstAmount.textContent = formatMoney(halfGst);
         sgstAmount.textContent = formatMoney(totalGst - halfGst);
@@ -235,7 +329,13 @@ function updateGstSplit(){
     }
 }
 
-shippingState.addEventListener("change", updateGstSplit);
+if (shippingState) {
+    shippingState.addEventListener("change", updateGstSplit);
+}
+savedAddressRadios.forEach((radio) => {
+    radio.addEventListener("change", toggleNewAddressFields);
+});
+toggleNewAddressFields();
 updateGstSplit();
 </script>
 
