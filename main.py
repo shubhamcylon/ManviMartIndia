@@ -49,8 +49,6 @@ app.config['STORE_ADDRESS'] = os.environ.get("STORE_ADDRESS") or 'Haridwar, Utta
 app.config['STORE_STATE'] = os.environ.get("STORE_STATE") or 'Uttarakhand'
 app.config['STORE_STATE_CODE'] = os.environ.get("STORE_STATE_CODE") or '05'
 app.config['STORE_WHATSAPP_NUMBER'] = os.environ.get("STORE_WHATSAPP_NUMBER", "")
-app.config['ORDER_ALERT_TELEGRAM_BOT_TOKEN'] = os.environ.get("ORDER_ALERT_TELEGRAM_BOT_TOKEN", "")
-app.config['ORDER_ALERT_TELEGRAM_CHAT_ID'] = os.environ.get("ORDER_ALERT_TELEGRAM_CHAT_ID", "")
 app.config['ORDER_ALERT_WHATSAPP_PHONE'] = os.environ.get("ORDER_ALERT_WHATSAPP_PHONE", "")
 app.config['ORDER_ALERT_WHATSAPP_APIKEY'] = os.environ.get("ORDER_ALERT_WHATSAPP_APIKEY", "")
 app.config['GOOGLE_SHEET_WEBHOOK_URL'] = os.environ.get("GOOGLE_SHEET_WEBHOOK_URL", "")
@@ -318,7 +316,7 @@ products = [
     },
     {
         "id": 16,
-        "name": "White Floral Co-ord Set",
+        "name": "White Floral lower",
         "price": 399,
         "hsn": "6204",
         "gst_rate": 5,
@@ -336,7 +334,7 @@ products = [
     },
     {
         "id": 17,
-        "name": "Aqua Floral Co-ord Set",
+        "name": "Aqua Floral Lower",
         "price": 399,
         "hsn": "6204",
         "gst_rate": 5,
@@ -353,7 +351,7 @@ products = [
     },
     {
         "id": 18,
-        "name": "Navy Floral Co-ord Set",
+        "name": "Navy Floral Lower",
         "price": 399,
         "hsn": "6204",
         "gst_rate": 5,
@@ -856,31 +854,6 @@ def send_store_order_email(order, alert_text):
         return False
 
 
-def send_telegram_order_alert(alert_text):
-    bot_token = app.config.get("ORDER_ALERT_TELEGRAM_BOT_TOKEN")
-    chat_id = app.config.get("ORDER_ALERT_TELEGRAM_CHAT_ID")
-    if not bot_token or not chat_id:
-        return False
-
-    endpoint = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-    payload = urlencode({"chat_id": chat_id, "text": alert_text})
-    request_obj = Request(
-        endpoint,
-        data=payload.encode("utf-8"),
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
-        method="POST",
-    )
-
-    try:
-        with urlopen(request_obj, timeout=10) as response:
-            return 200 <= getattr(response, "status", 200) < 300
-    except (HTTPError, URLError):
-        app.logger.exception("Telegram order notification failed.")
-    except Exception:
-        app.logger.exception("Unexpected Telegram notification error.")
-    return False
-
-
 def send_whatsapp_order_alert(alert_text):
     phone = normalize_whatsapp_number(app.config.get("ORDER_ALERT_WHATSAPP_PHONE", ""))
     api_key = app.config.get("ORDER_ALERT_WHATSAPP_APIKEY")
@@ -908,9 +881,7 @@ def send_order_alerts(order):
     alert_text = build_order_alert_text(order)
     results = {
         "email": send_store_order_email(order, alert_text),
-        "telegram": send_telegram_order_alert(alert_text),
         "whatsapp": send_whatsapp_order_alert(alert_text),
-        "google_sheet": send_google_sheet_order_alert(order),
     }
     if not any(results.values()):
         app.logger.warning(

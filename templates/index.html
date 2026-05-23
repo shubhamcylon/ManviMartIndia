@@ -33,31 +33,5 @@
 {% set product_list = products %}
 {% include "components/product_section.html" %}
 
-<section class="py-5 editorial-band">
-    <div class="container">
-        <div class="product-showcase-head">
-            <h2 class="product-showcase-title">EDITORIAL</h2>
-            <a href="{{ url_for('blogs_page') }}" class="product-view-link">READ ALL</a>
-        </div>
-        <div class="blog-grid">
-            {% for post in blog_posts[:3] %}
-            <article class="blog-card">
-                <a href="{{ url_for('blog_detail', slug=post.slug) }}" class="blog-image">
-                    <img src="{{ url_for('static', filename=post.image) }}" alt="{{ post.title }}" loading="lazy">
-                </a>
-                <div class="blog-body">
-                    <div class="blog-meta">
-                        <span>{{ post.date }}</span>
-                    </div>
-                    <h2>
-                        <a href="{{ url_for('blog_detail', slug=post.slug) }}">{{ post.title }}</a>
-                    </h2>
-                    <a href="{{ url_for('blog_detail', slug=post.slug) }}" class="blog-read-link">READ</a>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-    </div>
-</section>
 
 {% endblock %}
