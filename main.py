@@ -48,9 +48,6 @@ app.config['STORE_GSTIN'] = os.environ.get("STORE_GSTIN") or 'GSTIN_NOT_ADDED'
 app.config['STORE_ADDRESS'] = os.environ.get("STORE_ADDRESS") or 'Haridwar, Uttarakhand, India'
 app.config['STORE_STATE'] = os.environ.get("STORE_STATE") or 'Uttarakhand'
 app.config['STORE_STATE_CODE'] = os.environ.get("STORE_STATE_CODE") or '05'
-app.config['STORE_WHATSAPP_NUMBER'] = os.environ.get("STORE_WHATSAPP_NUMBER", "")
-app.config['ORDER_ALERT_WHATSAPP_PHONE'] = os.environ.get("ORDER_ALERT_WHATSAPP_PHONE", "")
-app.config['ORDER_ALERT_WHATSAPP_APIKEY'] = os.environ.get("ORDER_ALERT_WHATSAPP_APIKEY", "")
 app.config['GOOGLE_SHEET_WEBHOOK_URL'] = os.environ.get("GOOGLE_SHEET_WEBHOOK_URL", "")
 app.config['GOOGLE_SHEET_WEBHOOK_TOKEN'] = os.environ.get("GOOGLE_SHEET_WEBHOOK_TOKEN", "")
 
@@ -731,15 +728,6 @@ def format_inr(value):
     return f"{money(value):.2f}"
 
 
-def normalize_whatsapp_number(phone):
-    digits = normalize_phone(phone)
-    if digits.startswith("00"):
-        digits = digits[2:]
-    if len(digits) == 10:
-        digits = f"91{digits}"
-    return digits
-
-
 def build_order_alert_text(order):
     lines = [
         "New order placed on Manvi Mart",
@@ -854,34 +842,10 @@ def send_store_order_email(order, alert_text):
         return False
 
 
-def send_whatsapp_order_alert(alert_text):
-    phone = normalize_whatsapp_number(app.config.get("ORDER_ALERT_WHATSAPP_PHONE", ""))
-    api_key = app.config.get("ORDER_ALERT_WHATSAPP_APIKEY")
-    if not phone or not api_key:
-        return False
-
-    query = urlencode({
-        "phone": phone,
-        "text": alert_text,
-        "apikey": api_key,
-    })
-    endpoint = f"https://api.callmebot.com/whatsapp.php?{query}"
-
-    try:
-        with urlopen(endpoint, timeout=10) as response:
-            return 200 <= getattr(response, "status", 200) < 300
-    except (HTTPError, URLError):
-        app.logger.exception("WhatsApp order notification failed.")
-    except Exception:
-        app.logger.exception("Unexpected WhatsApp notification error.")
-    return False
-
-
 def send_order_alerts(order):
     alert_text = build_order_alert_text(order)
     results = {
         "email": send_store_order_email(order, alert_text),
-        "whatsapp": send_whatsapp_order_alert(alert_text),
     }
     if not any(results.values()):
         app.logger.warning(
@@ -1072,7 +1036,6 @@ def cart_counter():
 def store_settings():
     return dict(
         store_email=app.config['STORE_EMAIL'],
-        store_whatsapp_number=app.config['STORE_WHATSAPP_NUMBER'],
         online_payment_enabled=app.config['ONLINE_PAYMENT_ENABLED'],
         store_name=app.config['STORE_NAME'],
         store_gstin=app.config['STORE_GSTIN'],
@@ -1644,20 +1607,10 @@ def order_success(tracking_id):
         flash("Please login to view this order.", "warning")
         return redirect(url_for("login"))
 
-    whatsapp_link = None
-    store_whatsapp = normalize_whatsapp_number(app.config.get("STORE_WHATSAPP_NUMBER", ""))
-    if store_whatsapp:
-        message = quote(
-            f"Hi Manvi Mart, I placed an order.\nTracking ID: {order.tracking_id}\n"
-            f"Name: {order.customer_name}\nPhone: {order.customer_phone}"
-        )
-        whatsapp_link = f"https://wa.me/{store_whatsapp}?text={message}"
-
     return render_template(
         "order_success.html",
         order=order,
         payment_methods=PAYMENT_METHODS,
-        whatsapp_link=whatsapp_link
     )
 
 

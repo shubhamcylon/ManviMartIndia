@@ -30,9 +30,6 @@
             </div>
 
             <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
-                <a href="{{ url_for('track_order') }}" class="btn btn-success px-4">
-                    Track Order
-                </a>
                 {% if current_user %}
                 <a href="{{ url_for('account') }}" class="btn btn-outline-dark px-4">
                     My Account
@@ -41,11 +38,6 @@
                 <a href="{{ url_for('products_page') }}" class="btn btn-outline-dark px-4">
                     Continue Shopping
                 </a>
-                {% if whatsapp_link %}
-                <a href="{{ whatsapp_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-success px-4">
-                    Confirm on WhatsApp
-                </a>
-                {% endif %}
             </div>
         </div>
     </div>
